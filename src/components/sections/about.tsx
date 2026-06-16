@@ -1,12 +1,12 @@
 "use client";
 
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
+import { BentoGridItem } from "@/components/ui/bento-grid";
 import { Apple, Calendar, Layout, Server } from "lucide-react";
 import { motion } from "framer-motion";
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="relative w-full bg-black py-20 px-4 md:px-8">
+    <section id="about" className="relative w-full bg-transparent py-20 px-4 md:px-8">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -19,18 +19,37 @@ export const AboutSection = () => {
           <div className="mt-2 h-1 w-20 rounded bg-zinc-800" />
         </motion.div>
 
-        <BentoGrid className="max-w-5xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: { staggerChildren: 0.15 },
+            },
+          }}
+          className="max-w-5xl mx-auto grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-4"
+        >
           {items.map((item, i) => (
-            <BentoGridItem
+            <motion.div
               key={i}
-              title={item.title}
-              description={item.description}
-              header={item.header}
-              icon={item.icon}
               className={item.className}
-            />
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+              }}
+            >
+              <BentoGridItem
+                title={item.title}
+                description={item.description}
+                header={item.header}
+                icon={item.icon}
+                className="h-full"
+              />
+            </motion.div>
           ))}
-        </BentoGrid>
+        </motion.div>
       </div>
     </section>
   );

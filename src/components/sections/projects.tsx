@@ -1,6 +1,6 @@
 "use client";
 
-import { TiltCard } from "@/components/ui/3d-tilt-card";
+import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
@@ -23,7 +23,7 @@ export const ProjectsSection = () => {
   ];
 
   return (
-    <section id="projects" className="relative w-full bg-black py-20 px-4 md:px-8 pb-40">
+    <section id="projects" className="relative w-full bg-transparent py-20 px-4 md:px-8 pb-40">
       <div className="mx-auto max-w-7xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -36,19 +36,35 @@ export const ProjectsSection = () => {
           <div className="mt-2 h-1 w-20 rounded bg-zinc-800" />
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: { staggerChildren: 0.2 },
+            },
+          }}
+          className="grid grid-cols-1 gap-8 md:grid-cols-2"
+        >
           {projects.map((project, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.2 }}
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+              }}
               className="h-full"
             >
-              <TiltCard className="group flex h-full flex-col">
-                <div className="relative h-48 w-full overflow-hidden rounded-xl mb-6">
-                  {/* Real Image Placeholder, unoptimized to avoid next.config changes */}
+              <Tilt
+                glareEnable={true}
+                glareMaxOpacity={0.45}
+                tiltMaxAngleX={10}
+                tiltMaxAngleY={10}
+                className="group flex h-full flex-col relative rounded-2xl border border-zinc-800 bg-zinc-950 p-6 shadow-2xl transition-colors hover:border-zinc-700"
+              >
+                <div className="relative h-48 w-full overflow-hidden rounded-xl mb-6 transform-gpu" style={{ transform: "translateZ(30px)" }}>
                   <Image
                     src={project.imagePlaceholder}
                     alt={project.title}
@@ -59,7 +75,7 @@ export const ProjectsSection = () => {
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
                 </div>
 
-                <div className="flex flex-1 flex-col">
+                <div className="flex flex-1 flex-col transform-gpu" style={{ transform: "translateZ(40px)" }}>
                   <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
                   <p className="text-zinc-400 mb-6 flex-1">{project.description}</p>
                   
@@ -82,10 +98,10 @@ export const ProjectsSection = () => {
                     </button>
                   </div>
                 </div>
-              </TiltCard>
+              </Tilt>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

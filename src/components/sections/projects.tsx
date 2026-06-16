@@ -9,16 +9,18 @@ import Image from "next/image";
 export const ProjectsSection = () => {
   const projects = [
     {
-      title: "FixIt 2.0",
-      description: "A comprehensive maintenance service platform built to streamline repair requests and technician dispatches.",
-      tech: ["Next.js", "Prisma", "Tailwind CSS", "TypeScript"],
+      title: "UC Online Learning Business Directory",
+      description: "Built a digital ecosystem connecting 1,000+ students and 100+ alumni. Optimized complex relational database queries (Entrepreneur vs Intrapreneur) by shifting processing load to the backend using Laravel Collections, delivering instant frontend filtering via Alpine.js.",
+      tech: ["Laravel", "MySQL", "Alpine.js", "Tailwind"],
       imagePlaceholder: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop",
+      link: "https://github.com/Jeruk-Kurej/UC-Online-Learning"
     },
     {
-      title: "Niraloka",
-      description: "An AI-driven auditing system concept designed to automate compliance checks and anomaly detection.",
-      tech: ["React", "Python", "OpenAI", "FastAPI"],
+      title: "YukDebat",
+      description: "An integrated iOS platform for the British Parliamentary debate ecosystem. Engineered a robust asynchronous data pipeline utilizing Swift's async/await and Task to flawlessly sequence heavy poster uploads to Cloudinary and metadata syncing to Firestore without UI freezing.",
+      tech: ["Swift", "Firebase Firestore", "Cloudinary"],
       imagePlaceholder: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+      link: "https://github.com/Jeruk-Kurej/YukDebat"
     },
   ];
 
@@ -77,7 +79,7 @@ export const ProjectsSection = () => {
 
                 <div className="flex flex-1 flex-col transform-gpu" style={{ transform: "translateZ(40px)" }}>
                   <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  <p className="text-zinc-400 mb-6 flex-1">{project.description}</p>
+                  <p className="text-zinc-400 mb-6 flex-1 text-sm">{project.description}</p>
                   
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.tech.map((t, i) => (
@@ -88,14 +90,10 @@ export const ProjectsSection = () => {
                   </div>
 
                   <div className="flex items-center gap-4 mt-auto">
-                    <button className="flex items-center gap-2 text-sm font-medium text-white hover:text-blue-400 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
-                      Live Demo
-                    </button>
-                    <button className="flex items-center gap-2 text-sm font-medium text-white hover:text-blue-400 transition-colors">
+                    <a href={project.link} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-white hover:text-blue-400 transition-colors">
                       <GithubIcon className="h-4 w-4" />
-                      Source
-                    </button>
+                      View Source
+                    </a>
                   </div>
                 </div>
               </Tilt>

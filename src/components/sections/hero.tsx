@@ -60,9 +60,11 @@ export const HeroSection = () => {
 
         <motion.p
           variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-          className="max-w-xl text-lg text-zinc-400 sm:text-xl relative z-10"
+          className="max-w-2xl text-lg text-zinc-400 sm:text-xl relative z-10"
         >
-          Full Stack Application Developer
+          <span className="font-semibold text-zinc-200">Informatics Student & Full-Stack Application Developer</span>
+          <br className="mt-3 block" />
+          Crafting seamless web ecosystems and intuitive iOS experiences. Currently preparing for the Apple Developer Academy Cohort 2027.
         </motion.p>
 
         <motion.div

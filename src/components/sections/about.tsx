@@ -61,31 +61,24 @@ const Skeleton = ({ gradient }: { gradient: string }) => (
 
 const items = [
   {
-    title: "Next.js & React Ecosystem",
-    description: "Building blazingly fast, SEO-friendly web apps with modern React, Next.js App Router, and Tailwind CSS.",
+    title: "Education",
+    description: "Informatics at Universitas Ciputra Surabaya (GPA: 3.83/4.00).",
     header: <Skeleton gradient="from-blue-900/40 to-cyan-900/40" />,
     icon: <Layout className="h-4 w-4 text-neutral-500" />,
-    className: "md:col-span-2",
-  },
-  {
-    title: "Laravel & Backend",
-    description: "Crafting robust APIs and scalable server-side architectures.",
-    header: <Skeleton gradient="from-red-900/40 to-orange-900/40" />,
-    icon: <Server className="h-4 w-4 text-neutral-500" />,
     className: "md:col-span-1",
   },
   {
-    title: "Apple Developer Academy",
-    description: "Honing my skills in SwiftUI and the Apple ecosystem, preparing for the next wave of native mobile experiences.",
-    header: <Skeleton gradient="from-zinc-800/40 to-zinc-900/40" />,
-    icon: <Apple className="h-4 w-4 text-neutral-500" />,
-    className: "md:col-span-1",
-  },
-  {
-    title: "Event Organization",
-    description: "Core organizer for Intern Hustle 2026, empowering developers through community and collaboration.",
+    title: "Tech Stack",
+    description: "Swift, Kotlin, NextJS, Laravel, React, SwiftUI, Android Jetpack Compose, MySQL, PostgreSQL, Firebase, Cloudinary, Prisma.",
     header: <Skeleton gradient="from-purple-900/40 to-violet-900/40" />,
-    icon: <Calendar className="h-4 w-4 text-neutral-500" />,
+    icon: <Server className="h-4 w-4 text-neutral-500" />,
     className: "md:col-span-2",
+  },
+  {
+    title: "Leadership & Experience",
+    description: "Event Division Coordinator for Intern Hustle 2026. Creative Division Coordinator at GDG on Campus. Student Assistant for Object-Oriented Programming & Computer Architecture.",
+    header: <Skeleton gradient="from-zinc-800/40 to-zinc-900/40" />,
+    icon: <Calendar className="h-4 w-4 text-neutral-500" />,
+    className: "md:col-span-3",
   },
 ];

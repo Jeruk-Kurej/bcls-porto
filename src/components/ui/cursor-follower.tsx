@@ -1,50 +1,109 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+
+class Point {
+  x: number;
+  y: number;
+  lifetime: number;
+
+  constructor(x: number, y: number, lifetime: number) {
+    this.x = x;
+    this.y = y;
+    this.lifetime = lifetime;
+  }
+}
 
 export const CursorFollower = () => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-
-  const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
-  const cursorXSpring = useSpring(cursorX, springConfig);
-  const cursorYSpring = useSpring(cursorY, springConfig);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const points = useRef<Point[]>([]);
+  const isMounted = useRef(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-    
-    const moveCursor = (e: MouseEvent) => {
-      cursorX.set(e.clientX - 16);
-      cursorY.set(e.clientY - 16);
+    setMounted(true);
+    isMounted.current = true;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const setCanvasSize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
     };
 
-    const handleMouseEnter = () => setIsVisible(true);
-    const handleMouseLeave = () => setIsVisible(false);
+    setCanvasSize();
+    window.addEventListener("resize", setCanvasSize);
 
-    window.addEventListener("mousemove", moveCursor);
-    document.body.addEventListener("mouseenter", handleMouseEnter);
-    document.body.addEventListener("mouseleave", handleMouseLeave);
+    const onMouseMove = (e: MouseEvent) => {
+      points.current.push(new Point(e.clientX, e.clientY, 1.0));
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+
+    const render = () => {
+      if (!isMounted.current) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < points.current.length; i++) {
+        points.current[i].lifetime -= 0.015;
+        if (points.current[i].lifetime <= 0) {
+          points.current.splice(i, 1);
+          i--;
+        }
+      }
+
+      if (points.current.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(points.current[0].x, points.current[0].y);
+
+        for (let i = 1; i < points.current.length; i++) {
+          const xc = (points.current[i].x + points.current[i - 1].x) / 2;
+          const yc = (points.current[i].y + points.current[i - 1].y) / 2;
+          ctx.quadraticCurveTo(points.current[i - 1].x, points.current[i - 1].y, xc, yc);
+        }
+
+        ctx.lineTo(
+          points.current[points.current.length - 1].x,
+          points.current[points.current.length - 1].y
+        );
+
+        ctx.strokeStyle = "rgba(100, 200, 255, 0.4)";
+        ctx.lineWidth = 12;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "rgba(100, 200, 255, 0.6)";
+        ctx.stroke();
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
 
     return () => {
-      window.removeEventListener("mousemove", moveCursor);
-      document.body.removeEventListener("mouseenter", handleMouseEnter);
-      document.body.removeEventListener("mouseleave", handleMouseLeave);
+      isMounted.current = false;
+      window.removeEventListener("resize", setCanvasSize);
+      window.removeEventListener("mousemove", onMouseMove);
+      cancelAnimationFrame(animationFrameId);
     };
-  }, [cursorX, cursorY]);
+  }, []);
 
-  if (!isMounted) return null;
+  if (!mounted) return null;
 
   return (
-    <motion.div
-      className="pointer-events-none fixed left-0 top-0 z-[100] h-8 w-8 rounded-full bg-white/30 mix-blend-screen blur-[2px] transition-opacity duration-300"
-      style={{
-        x: cursorXSpring,
-        y: cursorYSpring,
-        opacity: isVisible ? 1 : 0,
-      }}
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none fixed inset-0 z-[9999]"
     />
   );
 };

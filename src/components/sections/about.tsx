@@ -19,7 +19,7 @@ export const AboutSection = () => {
           transition={{ duration: 0.8 }}
           className="mb-12 flex flex-col items-center justify-center text-center"
         >
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">About & Tech Stack</h2>
+          <h2 className="text-3xl font-bold text-white sm:text-4xl">Technical Profile</h2>
           <div className="mt-2 h-1 w-20 rounded bg-zinc-800" />
         </motion.div>
 

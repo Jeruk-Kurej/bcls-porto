@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export const CursorFollower = () => {
+  const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
@@ -13,6 +14,8 @@ export const CursorFollower = () => {
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
+    setIsMounted(true);
+    
     const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 16);
       cursorY.set(e.clientY - 16);
@@ -32,7 +35,7 @@ export const CursorFollower = () => {
     };
   }, [cursorX, cursorY]);
 
-  if (typeof window === "undefined") return null;
+  if (!isMounted) return null;
 
   return (
     <motion.div

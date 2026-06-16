@@ -2,25 +2,45 @@
 
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
-import Image from "next/image";
 
 export const ProjectsSection = () => {
   const projects = [
     {
-      title: "UC Online Learning Business Directory",
-      description: "Built a digital ecosystem connecting 1,000+ students and 100+ alumni. Optimized complex relational database queries (Entrepreneur vs Intrapreneur) by shifting processing load to the backend using Laravel Collections, delivering instant frontend filtering via Alpine.js.",
-      tech: ["Laravel", "MySQL", "Alpine.js", "Tailwind"],
-      imagePlaceholder: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop",
+      title: "UC Online Learning",
+      description: "A digital ecosystem connecting 1,000+ students. Optimized complex relational database queries by shifting processing load to the backend using Laravel Collections.",
+      tech: ["Laravel", "Alpine.js", "MySQL"],
       link: "https://github.com/Jeruk-Kurej/UC-Online-Learning"
     },
     {
       title: "YukDebat",
-      description: "An integrated iOS platform for the British Parliamentary debate ecosystem. Engineered a robust asynchronous data pipeline utilizing Swift's async/await and Task to flawlessly sequence heavy poster uploads to Cloudinary and metadata syncing to Firestore without UI freezing.",
-      tech: ["Swift", "Firebase Firestore", "Cloudinary"],
-      imagePlaceholder: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
+      description: "iOS platform for the BP debate ecosystem. Engineered a robust async/await pipeline to sequence heavy image uploads and metadata syncing flawlessly.",
+      tech: ["Swift", "Firebase", "Cloudinary"],
       link: "https://github.com/Jeruk-Kurej/YukDebat"
+    },
+    {
+      title: "Dagify",
+      description: "A native iOS business management application utilizing MVVM architecture. Features comprehensive modules for CRM, real-time cashflow tracking, inventory management, and a seamless POS interface powered by Firebase backend services.",
+      tech: ["Swift", "SwiftUI", "Firebase"],
+      link: "https://github.com/Jeruk-Kurej/Dagify"
+    },
+    {
+      title: "Sum-O Point of Sale",
+      description: "An end-to-end POS system. The native Android frontend is built with Kotlin and Jetpack Compose for a highly responsive UI, seamlessly integrated with a robust Node.js and Prisma backend to handle complex order processing and QRIS payments.",
+      tech: ["Kotlin", "Jetpack Compose", "Node.js", "Prisma"],
+      link: "https://github.com/Jeruk-Kurej/Sum-O"
+    },
+    {
+      title: "Darmo Permai Web Portal",
+      description: "A full-stack congregation management portal. Engineered a monolithic architecture using Laravel as the core backend, bridged seamlessly to a highly interactive React frontend via Inertia.js. Features dynamic bulletins, media galleries, and event scheduling.",
+      tech: ["Laravel", "React", "Inertia.js", "Tailwind"],
+      link: "https://github.com/Jeruk-Kurej/GKI-Darmo-Permai"
+    },
+    {
+      title: "FixIt",
+      description: "A modern appliance repair booking platform. Implemented a complex, multi-step service selection architecture with dedicated real-time dashboards for customers, technicians, and administrators.",
+      tech: ["Next.js", "Prisma", "TypeScript"],
+      link: "https://github.com/Jeruk-Kurej/FixIt"
     },
   ];
 
@@ -45,7 +65,7 @@ export const ProjectsSection = () => {
           variants={{
             hidden: {},
             visible: {
-              transition: { staggerChildren: 0.2 },
+              transition: { staggerChildren: 0.15 },
             },
           }}
           className="grid grid-cols-1 gap-8 md:grid-cols-2"
@@ -61,38 +81,27 @@ export const ProjectsSection = () => {
             >
               <Tilt
                 glareEnable={true}
-                glareMaxOpacity={0.45}
-                tiltMaxAngleX={10}
-                tiltMaxAngleY={10}
-                className="group flex h-full flex-col relative rounded-2xl border border-zinc-800 bg-zinc-950 p-6 shadow-2xl transition-colors hover:border-zinc-700"
+                glareMaxOpacity={0.15}
+                tiltMaxAngleX={5}
+                tiltMaxAngleY={5}
+                className="group flex h-full flex-col relative rounded-2xl border border-zinc-800 bg-zinc-950 p-6 md:p-8 shadow-2xl transition-colors hover:border-zinc-700"
               >
-                <div className="relative h-48 w-full overflow-hidden rounded-xl mb-6 transform-gpu" style={{ transform: "translateZ(30px)" }}>
-                  <Image
-                    src={project.imagePlaceholder}
-                    alt={project.title}
-                    fill
-                    unoptimized
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500" />
-                </div>
-
                 <div className="flex flex-1 flex-col transform-gpu" style={{ transform: "translateZ(40px)" }}>
-                  <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                  <p className="text-zinc-400 mb-6 flex-1 text-sm">{project.description}</p>
+                  <h3 className="text-2xl font-bold text-white mb-4">{project.title}</h3>
+                  <p className="text-zinc-400 mb-8 flex-1 text-sm md:text-base leading-relaxed">{project.description}</p>
                   
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-8 mt-auto">
                     {project.tech.map((t, i) => (
-                      <span key={i} className="rounded-full bg-zinc-900 px-3 py-1 text-xs font-medium text-zinc-300 border border-zinc-800">
+                      <span key={i} className="rounded-full bg-zinc-900 px-3 py-1.5 text-xs font-medium text-zinc-300 border border-zinc-800 shadow-inner">
                         {t}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-4 mt-auto">
-                    <a href={project.link} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-sm font-medium text-white hover:text-blue-400 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <a href={project.link} target="_blank" rel="noreferrer" className="flex items-center justify-center w-full md:w-auto gap-2 px-6 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-sm font-medium text-white transition-all border border-white/5 hover:border-white/20">
                       <GithubIcon className="h-4 w-4" />
-                      View Source
+                      View Repository
                     </a>
                   </div>
                 </div>

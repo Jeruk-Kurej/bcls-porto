@@ -89,9 +89,9 @@ const GithubCalendarComponent = () => {
     <GitHubCalendar
       username="Jeruk-Kurej"
       theme={githubTheme}
-      hideColorLegend
-      hideMonthLabels
-      hideTotalCount
+      showColorLegend={false}
+      showMonthLabels={false}
+      showTotalCount={false}
       blockSize={12}
       blockMargin={4}
       colorScheme="dark"

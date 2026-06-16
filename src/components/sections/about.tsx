@@ -10,7 +10,7 @@ import { GithubIcon } from "@/components/ui/icons";
 
 export const AboutSection = () => {
   return (
-    <section id="about" className="relative w-full bg-transparent py-20 px-4 md:px-8">
+    <section id="capabilities" className="relative w-full bg-transparent py-20 px-4 md:px-8">
       <div className="mx-auto max-w-5xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -11,7 +11,7 @@ export const HeroSection = () => {
   };
 
   return (
-    <section className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-transparent antialiased">
+    <section id="hero" className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-transparent antialiased">
       <Spotlight
         className="-top-40 left-0 md:-top-20 md:left-60"
         fill="white"

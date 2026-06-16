@@ -5,10 +5,13 @@ import { FooterSection } from "@/components/sections/footer";
 import { Particles } from "@/components/ui/particles";
 import { SplashCursor } from "@/components/ui/cursor";
 
+import { FloatingNav } from "@/components/ui/floating-nav";
+
 export default function Home() {
   return (
     <main className="relative flex min-h-screen flex-col bg-black selection:bg-zinc-800 selection:text-white">
       <SplashCursor />
+      <FloatingNav />
       <Particles className="fixed inset-0 z-0 opacity-40 pointer-events-none" />
       <div className="z-10 relative flex flex-col">
         <HeroSection />

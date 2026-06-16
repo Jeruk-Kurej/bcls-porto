@@ -5,17 +5,24 @@ import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 
 export const FooterSection = () => {
   return (
-    <footer className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
-      <div className="flex items-center gap-6 rounded-full border border-zinc-800 bg-black/50 px-6 py-3 backdrop-blur-md shadow-2xl">
-        <a href="https://github.com/Jeruk-Kurej" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors" aria-label="GitHub">
-          <GithubIcon className="h-5 w-5" />
-        </a>
-        <a href="https://www.linkedin.com/in/bcls" target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors" aria-label="LinkedIn">
-          <LinkedinIcon className="h-5 w-5" />
-        </a>
-        <a href="mailto:blukitosetiawan@gmail.com" className="text-zinc-400 hover:text-white transition-colors" aria-label="Email">
-          <Mail className="h-5 w-5" />
-        </a>
+    <footer id="contact" className="w-full relative z-10 py-12 mt-20 border-t border-zinc-900/50 bg-black/50 backdrop-blur-md">
+      <div className="mx-auto max-w-5xl px-4 md:px-8 flex flex-col items-center justify-center gap-6">
+        <h3 className="text-xl font-semibold text-white">Let's Connect</h3>
+        <div className="flex items-center gap-8">
+          <a href="https://github.com/Jeruk-Kurej" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="GitHub">
+            <GithubIcon className="h-6 w-6" />
+            <span className="text-sm font-medium">GitHub</span>
+          </a>
+          <a href="https://www.linkedin.com/in/bcls" target="_blank" rel="noreferrer" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="LinkedIn">
+            <LinkedinIcon className="h-6 w-6" />
+            <span className="text-sm font-medium">LinkedIn</span>
+          </a>
+          <a href="mailto:blukitosetiawan@gmail.com" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors" aria-label="Email">
+            <Mail className="h-6 w-6" />
+            <span className="text-sm font-medium">Email</span>
+          </a>
+        </div>
+        <p className="text-zinc-500 text-xs mt-4">© {new Date().getFullYear()} Bryan Carlie Lukito Setiawan. All rights reserved.</p>
       </div>
     </footer>
   );

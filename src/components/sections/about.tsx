@@ -4,7 +4,6 @@ import { BentoGridItem } from "@/components/ui/bento-grid";
 import { Calendar, GraduationCap, Layout, Server, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { Marquee } from "@/components/ui/marquee";
-import { GridPattern } from "@/components/ui/grid-pattern";
 
 export const AboutSection = () => {
   return (
@@ -106,7 +105,6 @@ const items = [
     description: "Event Division Coordinator for Intern Hustle 2026. Creative Division Coordinator at GDG on Campus. Student Assistant for Object-Oriented Programming & Computer Architecture.",
     header: (
       <div className="relative flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden bg-zinc-900/20 items-center justify-center">
-        <GridPattern className="text-zinc-600/20" />
         <div className="z-10 flex gap-8">
           <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{ duration: 3, repeat: Infinity }}>
             <Calendar className="h-12 w-12 text-zinc-300 drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]" />

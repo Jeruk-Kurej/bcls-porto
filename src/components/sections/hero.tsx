@@ -42,7 +42,7 @@ export const HeroSection = () => {
         </motion.div>
 
         <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}>
-          <h1 className="bg-gradient-to-br from-white to-zinc-500 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
+          <h1 className="bg-gradient-to-r from-zinc-300 via-blue-400 to-zinc-300 bg-[length:200%_auto] animate-text-gradient bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
             Bryan Carlie <br className="hidden sm:block" /> Lukito Setiawan
           </h1>
         </motion.div>

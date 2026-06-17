@@ -45,8 +45,18 @@ export const Particles = ({
         }
       }
     };
+    
+    const onMouseLeave = () => {
+      mousePosition.current.x = -9999;
+      mousePosition.current.y = -9999;
+    };
+
     window.addEventListener("mousemove", onMouseMove);
-    return () => window.removeEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseout", onMouseLeave);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseout", onMouseLeave);
+    };
   }, []);
 
   const initCanvas = () => {
@@ -161,6 +171,26 @@ export const Particles = ({
         );
       }
     });
+
+    if (context.current) {
+      circles.current.forEach((circle: any) => {
+        const dx = mousePosition.current.x - (circle.x + circle.translateX);
+        const dy = mousePosition.current.y - (circle.y + circle.translateY);
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        const maxDistance = 150;
+        if (distance < maxDistance) {
+          context.current!.beginPath();
+          context.current!.moveTo(circle.x + circle.translateX, circle.y + circle.translateY);
+          context.current!.lineTo(mousePosition.current.x, mousePosition.current.y);
+          const lineAlpha = (1 - distance / maxDistance) * 0.3; 
+          context.current!.strokeStyle = `rgba(${hexToRgb(color).join(", ")}, ${lineAlpha})`;
+          context.current!.lineWidth = 0.5;
+          context.current!.stroke();
+        }
+      });
+    }
+
     window.requestAnimationFrame(animate);
   };
 

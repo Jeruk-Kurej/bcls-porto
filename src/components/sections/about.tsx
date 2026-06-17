@@ -120,15 +120,17 @@ const items = [
         <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none"></div>
         <Marquee className="py-4" pauseOnHover>
           {techStack.map((tech, idx) => (
-            <a
+            <motion.a
               key={idx}
               href={tech.url}
               target="_blank"
               rel="noreferrer"
-              className="z-20 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium text-white border border-white/10 hover:border-white/20 transition-colors whitespace-nowrap"
+              whileHover={{ y: -5, scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="inline-block z-20 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium text-white border border-white/10 hover:border-white/20 transition-colors whitespace-nowrap cursor-pointer"
             >
               {tech.name}
-            </a>
+            </motion.a>
           ))}
         </Marquee>
       </div>

@@ -101,14 +101,18 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             {project.features.map((feature, i) => {
               const IconComponent = feature.icon ? IconMap[feature.icon] : null;
               return (
-                <div key={i} className="flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.05]">
+                <div key={i} className="group/feature flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-colors">
                   {IconComponent && (
-                    <div className="mt-0.5 p-1.5 rounded-md bg-white/10 text-zinc-300">
+                    <motion.div 
+                      whileHover={{ rotate: 15, scale: 1.2 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                      className="mt-0.5 p-1.5 rounded-md bg-white/10 text-zinc-300 group-hover/feature:text-blue-400 transition-colors"
+                    >
                       <IconComponent className="h-4 w-4" />
-                    </div>
+                    </motion.div>
                   )}
                   <div>
-                    <h5 className="text-white text-sm font-medium mb-1">{feature.title}</h5>
+                    <h5 className="text-white text-sm font-medium mb-1 group-hover/feature:text-blue-400 transition-colors">{feature.title}</h5>
                     <p className="text-zinc-500 text-xs leading-relaxed">{feature.description}</p>
                   </div>
                 </div>

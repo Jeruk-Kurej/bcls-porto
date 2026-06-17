@@ -15,6 +15,7 @@ export type Project = {
   techStack: string[];
   tools: string[];
   link: string;
+  images?: string[];
 };
 
 export const projectsData: Project[] = [
@@ -33,7 +34,8 @@ export const projectsData: Project[] = [
     ],
     techStack: ["Laravel 11 (PHP)", "React.js", "TypeScript", "Tailwind CSS", "Inertia.js", "MySQL"],
     tools: ["Docker", "Railway"],
-    link: "https://github.com/Jeruk-Kurej/UC-Online-Learning"
+    link: "https://github.com/Jeruk-Kurej/UC-Online-Learning",
+    images: ["/images/uco-1.png", "/images/uco-2.png", "/images/uco-3.png", "/images/uco-4.png"]
   },
   {
     id: "gki-darmo-permai",

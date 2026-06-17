@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { GithubIcon } from "@/components/ui/icons";
 import { projectsData, Project } from "@/data/projects";
 import { Laptop, Smartphone, Layers, Layout, Shield, Cloud } from "lucide-react";
@@ -41,6 +42,16 @@ const ProjectCard = ({
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [opacity, setOpacity] = useState(0);
+  const [currentImageIdx, setCurrentImageIdx] = useState(0);
+
+  useEffect(() => {
+    if (project.images && project.images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentImageIdx((prev) => (prev + 1) % project.images!.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [project.images]);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -65,6 +76,8 @@ const ProjectCard = ({
 
   const Icon = mockIcons[index] || mockIcons[0];
   const Gradient = mockGradients[index] || mockGradients[0];
+  
+  const hasImages = project.images && project.images.length > 0;
 
   return (
     <div 
@@ -89,14 +102,39 @@ const ProjectCard = ({
           style={{ opacity, background }}
         />
         
-        {/* Media / Mockup Region (Left side on desktop, Top on mobile) */}
-        <div className={cn("relative w-full md:w-1/2 flex items-center justify-center overflow-hidden bg-gradient-to-br min-h-[250px] md:min-h-full border-b md:border-b-0 md:border-r border-zinc-800/50", Gradient)}>
-          <div className="absolute inset-0 bg-black/30 z-0"></div>
-          <div className="absolute inset-0 z-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+        {/* Media / Mockup Region */}
+        <div className={cn("relative w-full md:w-1/2 flex items-center justify-center overflow-hidden min-h-[250px] md:min-h-full border-b md:border-b-0 md:border-r border-zinc-800/50 bg-black", !hasImages && `bg-gradient-to-br ${Gradient}`)}>
           
-          <div className="relative z-10 transition-transform duration-700 ease-out group-hover:scale-110 drop-shadow-2xl">
-            {Icon}
-          </div>
+          {hasImages ? (
+            <div className="absolute inset-0 w-full h-full">
+              {project.images!.map((img, i) => (
+                <div 
+                  key={i}
+                  className={cn(
+                    "absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out",
+                    i === currentImageIdx ? "opacity-100" : "opacity-0"
+                  )}
+                >
+                  <Image 
+                    src={img} 
+                    alt={`${project.title} screenshot ${i + 1}`} 
+                    fill
+                    className="object-cover object-top opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              ))}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+            </div>
+          ) : (
+            <>
+              <div className="absolute inset-0 bg-black/30 z-0"></div>
+              <div className="absolute inset-0 z-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+              <div className="relative z-10 transition-transform duration-700 ease-out group-hover:scale-110 drop-shadow-2xl">
+                {Icon}
+              </div>
+            </>
+          )}
           
           <a 
             href={project.link} 

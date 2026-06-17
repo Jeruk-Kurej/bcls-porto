@@ -115,11 +115,12 @@ const items = [
     title: "My Development Toolkit",
     description: "Continuously mastering modern languages and frameworks.",
     header: (
-      <div className="relative flex flex-1 w-full h-full min-h-[12rem] rounded-xl overflow-hidden bg-purple-900/10 items-center justify-center">
+      <div className="relative flex flex-1 w-full flex-col h-full min-h-[12rem] rounded-xl overflow-hidden bg-purple-900/10 items-center justify-center gap-4">
         <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none"></div>
         <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none"></div>
-        <Marquee className="py-4" pauseOnHover>
-          {techStack.map((tech, idx) => (
+        
+        <Marquee className="w-full" pauseOnHover>
+          {techStack.slice(0, Math.ceil(techStack.length / 2)).map((tech, idx) => (
             <motion.a
               key={idx}
               href={tech.url}
@@ -127,7 +128,23 @@ const items = [
               rel="noreferrer"
               whileHover={{ y: -5, scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="inline-block z-20 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium text-white border border-white/10 hover:border-white/20 transition-colors whitespace-nowrap cursor-pointer"
+              className="inline-block z-20 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium text-white border border-white/10 hover:border-white/20 transition-colors whitespace-nowrap cursor-pointer mx-2"
+            >
+              {tech.name}
+            </motion.a>
+          ))}
+        </Marquee>
+
+        <Marquee className="w-full" pauseOnHover reverse>
+          {techStack.slice(Math.ceil(techStack.length / 2)).map((tech, idx) => (
+            <motion.a
+              key={idx}
+              href={tech.url}
+              target="_blank"
+              rel="noreferrer"
+              whileHover={{ y: -5, scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="inline-block z-20 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium text-white border border-white/10 hover:border-white/20 transition-colors whitespace-nowrap cursor-pointer mx-2"
             >
               {tech.name}
             </motion.a>

@@ -1,6 +1,7 @@
 "use client";
 
 
+import { Spotlight } from "@/components/ui/spotlight";
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -12,6 +13,7 @@ export const HeroSection = () => {
 
   return (
     <section id="hero" className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-transparent antialiased">
+      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-black to-black opacity-80 pointer-events-none"></div>
 
       <motion.div

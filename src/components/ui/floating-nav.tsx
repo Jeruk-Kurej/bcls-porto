@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   { name: "Home", href: "#hero" },
@@ -10,6 +12,26 @@ const navItems = [
 ];
 
 export const FloatingNav = () => {
+  const { scrollYProgress } = useScroll();
+  const [visible, setVisible] = useState(true);
+
+  useMotionValueEvent(scrollYProgress, "change", (current) => {
+    // Check if current is not undefined and is a number
+    if (typeof current === "number") {
+      let direction = current! - scrollYProgress.getPrevious()!;
+
+      if (scrollYProgress.get() < 0.05) {
+        setVisible(true);
+      } else {
+        if (direction < 0) {
+          setVisible(true);
+        } else {
+          setVisible(false);
+        }
+      }
+    }
+  });
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const target = document.querySelector(href);
@@ -20,7 +42,6 @@ export const FloatingNav = () => {
       const duration = 250; 
       let start: number | null = null;
 
-      // Custom easing function (easeInOutQuart) for a very soft start and end
       const easeInOutQuart = (t: number) => {
         return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
       };
@@ -43,11 +64,13 @@ export const FloatingNav = () => {
   };
 
   return (
-    <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[999]">
-      <motion.nav
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
+    <motion.div 
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
+      transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-[999]"
+    >
+      <nav
         className="flex items-center gap-6 px-6 py-3 rounded-full bg-black/30 backdrop-blur-md border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
       >
         {navItems.map((item) => (
@@ -60,7 +83,7 @@ export const FloatingNav = () => {
             {item.name}
           </a>
         ))}
-      </motion.nav>
-    </div>
+      </nav>
+    </motion.div>
   );
 };

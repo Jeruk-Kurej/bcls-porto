@@ -12,7 +12,7 @@ export default function Home() {
     <main className="relative flex min-h-screen flex-col bg-black selection:bg-zinc-800 selection:text-white">
       <SplashCursor />
       <FloatingNav />
-      <Particles className="fixed inset-0 z-0 opacity-40 pointer-events-none" />
+      <Particles quantity={60} className="fixed inset-0 z-0 opacity-40 pointer-events-none" />
       <div className="z-10 relative flex flex-col">
         <HeroSection />
         <AboutSection />

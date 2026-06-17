@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from "framer-motion";
 import { useState, useRef } from "react";
 import { GithubIcon } from "@/components/ui/icons";
 import { projectsData, Project } from "@/data/projects";
@@ -25,20 +25,26 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   const [isExpanded, setIsExpanded] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current || isFocused) return;
     const div = divRef.current;
     const rect = div.getBoundingClientRect();
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   };
 
   const handleFocus = () => { setIsFocused(true); setOpacity(1); };
   const handleBlur = () => { setIsFocused(false); setOpacity(0); };
   const handleMouseEnter = () => { setOpacity(1); };
   const handleMouseLeave = () => { setOpacity(0); };
+
+  // Use motion template to avoid re-renders
+  const background = useMotionTemplate`radial-gradient(800px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,.06), transparent 40%)`;
 
   return (
     <motion.div
@@ -52,13 +58,14 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         hidden: { opacity: 0, y: 40 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
       }}
-      className="group relative overflow-hidden flex flex-col rounded-2xl border border-zinc-800/50 bg-zinc-950/50 p-6 md:p-8 shadow-2xl transition-colors hover:border-zinc-700/50 backdrop-blur-sm"
+      whileHover={{ scale: 1.02 }}
+      className="group relative overflow-hidden flex flex-col rounded-2xl border border-zinc-800/50 bg-zinc-950/50 p-6 md:p-8 shadow-2xl transition-all duration-300 hover:border-zinc-700/50 hover:shadow-[0_0_50px_rgba(59,130,246,0.1)] backdrop-blur-sm"
     >
-      <div
+      <motion.div
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
         style={{
           opacity,
-          background: `radial-gradient(800px circle at ${position.x}px ${position.y}px, rgba(255,255,255,.06), transparent 40%)`,
+          background,
         }}
       />
       <div className="relative z-10 flex flex-col h-full">

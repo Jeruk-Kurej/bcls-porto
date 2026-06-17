@@ -22,7 +22,7 @@ export const projectsData: Project[] = [
     id: "uc-online-learning",
     title: "UC Online Learning",
     subtitle: "Student & Alumni Business Directory",
-    about: "A comprehensive academic and business directory platform built for Universitas Ciputra. This platform bridges the gap between student/alumni entrepreneurs and potential clients or collaborators by showcasing their business profiles, achievements, and service catalogs.",
+    about: "A comprehensive academic and business directory platform built for Universitas Ciputra Online. This platform bridges the gap between student/alumni entrepreneurs and potential clients or collaborators by showcasing their business profiles, achievements, and service catalogs.",
     problem: "Students and alumni entrepreneurs often lack a unified, university-backed platform to professionally showcase their portfolios and services to the wider academic and business community.",
     solution: "Developed a robust directory ecosystem with AI moderation to ensure content quality and a seamless onboarding system to handle mass data imports efficiently.",
     features: [

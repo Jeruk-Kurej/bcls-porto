@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useRef, useState } from "react";
+import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
 
 export const BentoGrid = ({
   className,
@@ -37,16 +38,17 @@ export const BentoGridItem = ({
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current || isFocused) return;
-
     const div = divRef.current;
     const rect = div.getBoundingClientRect();
-
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
   };
 
   const handleFocus = () => {
@@ -67,8 +69,10 @@ export const BentoGridItem = ({
     setOpacity(0);
   };
 
+  const background = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,.1), transparent 40%)`;
+
   return (
-    <div
+    <motion.div
       ref={divRef}
       onMouseMove={handleMouseMove}
       onFocus={handleFocus}
@@ -80,11 +84,11 @@ export const BentoGridItem = ({
         className
       )}
     >
-      <div
+      <motion.div
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
         style={{
           opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,255,255,.1), transparent 40%)`,
+          background,
         }}
       />
       <div className="relative z-10 flex flex-col h-full justify-between">
@@ -99,6 +103,6 @@ export const BentoGridItem = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

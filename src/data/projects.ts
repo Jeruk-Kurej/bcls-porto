@@ -15,6 +15,7 @@ export type Project = {
   techStack: string[];
   tools: string[];
   link: string;
+  liveUrl?: string;
   images?: string[];
 };
 
@@ -35,6 +36,7 @@ export const projectsData: Project[] = [
     techStack: ["Laravel 11 (PHP)", "React.js", "TypeScript", "Tailwind CSS", "Inertia.js", "MySQL"],
     tools: ["Docker", "Railway"],
     link: "https://github.com/Jeruk-Kurej/UC-Online-Learning",
+    liveUrl: "https://uco-web.vercel.app",
     images: ["/images/uco/uco-1.png", "/images/uco/uco-2.png", "/images/uco/uco-3.png", "/images/uco/uco-4.png"]
   },
   {
@@ -53,6 +55,7 @@ export const projectsData: Project[] = [
     techStack: ["Laravel (PHP)", "React.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "Pest PHP"],
     tools: ["Vercel", "GitHub Actions (CI/CD)"],
     link: "https://github.com/Jeruk-Kurej/GKI-Darmo-Permai",
+    liveUrl: "https://gki-darmo-permai.vercel.app",
     images: ["/images/gki/gki-1.png", "/images/gki/gki-2.png", "/images/gki/gki-3.png"]
   },
   {
@@ -121,6 +124,7 @@ export const projectsData: Project[] = [
     ],
     techStack: ["Next.js (App Router)", "React", "TypeScript", "Prisma ORM", "NextAuth.js", "Tailwind CSS"],
     tools: ["Vercel", "PostgreSQL"],
-    link: "https://github.com/Jeruk-Kurej/FixIt"
+    link: "https://github.com/Jeruk-Kurej/FixIt",
+    liveUrl: "https://fix-it-project.vercel.app"
   }
 ];

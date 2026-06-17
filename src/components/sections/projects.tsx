@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { GithubIcon } from "@/components/ui/icons";
 import { projectsData, Project } from "@/data/projects";
-import { Laptop, Smartphone, Layers, Layout, Shield, Cloud } from "lucide-react";
+import { Laptop, Smartphone, Layers, Layout, Shield, Cloud, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const mockIcons = [
@@ -95,89 +95,88 @@ const ProjectCard = ({
         onBlur={handleBlur}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="group relative flex flex-col md:flex-row w-full overflow-hidden rounded-[2rem] border border-zinc-800/80 bg-black shadow-[0_-20px_40px_rgba(0,0,0,0.8)] min-h-[450px]"
+        className="group relative flex flex-col md:flex-row w-full overflow-hidden rounded-[2rem] border border-zinc-800/80 bg-zinc-950 shadow-[0_-20px_40px_rgba(0,0,0,0.8)] min-h-[450px]"
       >
         <motion.div
-          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-10"
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-20"
           style={{ opacity, background }}
         />
-        {/* Media / Mockup Region */}
-        <div className={cn("relative w-full md:w-1/2 flex items-center justify-center overflow-hidden min-h-[250px] md:min-h-full border-b md:border-b-0 md:border-r border-zinc-800/50 bg-black", !hasImages && `bg-gradient-to-br ${Gradient}`)}>
+        
+        {/* Clean Split Media Region */}
+        <div className={cn("relative w-full md:w-1/2 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-zinc-800/80 bg-black", !hasImages && `bg-gradient-to-br ${Gradient}`)}>
           {hasImages ? (
-            <div className="absolute inset-4 md:inset-8 rounded-xl border border-white/10 bg-zinc-900/50 shadow-2xl overflow-hidden flex flex-col backdrop-blur-md">
-              {/* Browser Header / Mockup Frame */}
-              <div className="h-8 w-full bg-zinc-800/50 backdrop-blur-md border-b border-white/5 flex items-center px-4 gap-2 shrink-0">
-                <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-[0_0_10px_rgba(244,63,94,0.4)]"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_10px_rgba(245,158,11,0.4)]"></div>
-                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_10px_rgba(16,185,129,0.4)]"></div>
-              </div>
-              
-              {/* Browser Content */}
-              <div className="relative w-full h-full bg-zinc-950">
-                {project.images!.map((img, i) => (
-                  <div 
-                    key={i}
-                    className={cn(
-                      "absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out",
-                      i === currentImageIdx ? "opacity-100 z-10" : "opacity-0 z-0"
-                    )}
-                  >
-                    <Image 
-                      src={img} 
-                      alt={`${project.title} screenshot ${i + 1}`} 
-                      fill
-                      className="object-cover object-top opacity-90 transition-opacity duration-500"
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
-                  </div>
-                ))}
-                {/* Subtle gradient overlay at the bottom so it blends nicely */}
-                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent z-20 pointer-events-none"></div>
-              </div>
+            <div className="absolute inset-0 w-full h-full z-0">
+              {project.images!.map((img, i) => (
+                <div 
+                  key={i}
+                  className={cn(
+                    "absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out",
+                    i === currentImageIdx ? "opacity-100 z-10" : "opacity-0 z-0"
+                  )}
+                >
+                  <Image 
+                    src={img} 
+                    alt={`${project.title} screenshot ${i + 1}`} 
+                    fill
+                    className="object-cover object-top opacity-90 group-hover:opacity-100 transition-opacity duration-700"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              ))}
             </div>
           ) : (
             <>
-              <div className="absolute inset-0 bg-black/30 z-0"></div>
-              <div className="absolute inset-0 z-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
-              <div className="relative z-10 transition-transform duration-700 ease-out group-hover:scale-110 drop-shadow-2xl">
-                {Icon}
-              </div>
+               <div className="absolute inset-0 bg-black/60 z-0"></div>
+               <div className="absolute inset-0 z-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+               <div className="relative z-10 transition-transform duration-700 ease-out group-hover:scale-110 drop-shadow-2xl">
+                 {Icon}
+               </div>
             </>
           )}
-          
-          <a 
-            href={project.link} 
-            target="_blank" 
-            rel="noreferrer" 
-            className="absolute bottom-6 z-20 flex translate-y-8 opacity-0 items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-sm font-semibold text-white transition-all duration-500 border border-white/10 hover:border-white/30 group-hover:translate-y-0 group-hover:opacity-100"
-          >
-            <GithubIcon className="h-4 w-4" />
-            View Repository
-          </a>
         </div>
 
-        {/* Content Region (Right side on desktop, Bottom on mobile) */}
-        <div className="relative z-10 w-full md:w-1/2 flex flex-col p-8 md:p-12">
+        {/* Content Region */}
+        <div className="relative z-10 w-full md:w-1/2 flex flex-col p-8 md:p-12 bg-zinc-950">
           <div className="mb-4">
-            <span className="inline-block px-3 py-1 mb-4 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-400 tracking-wider uppercase">
-              Project 0{index + 1}
-            </span>
             <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">{project.title}</h3>
             <p className="text-zinc-400 font-medium text-base md:text-lg">{project.subtitle}</p>
           </div>
           
-          <p className="text-zinc-500 leading-relaxed text-sm md:text-base line-clamp-4 mb-8">
+          <p className="text-zinc-400 leading-relaxed text-sm md:text-base line-clamp-4 mb-8">
             {project.about}
           </p>
           
           <div className="mt-auto">
-            <h4 className="text-zinc-300 font-semibold text-sm mb-3 uppercase tracking-wider">Technologies Used</h4>
-            <div className="flex flex-wrap gap-2">
+            <h4 className="text-zinc-500 font-semibold text-xs mb-3 uppercase tracking-wider">Technologies Used</h4>
+            <div className="flex flex-wrap gap-2 mb-8">
               {project.techStack.map((tech, i) => (
-                <span key={i} className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800/50 text-xs font-medium text-zinc-300">
+                <span key={i} className="px-3 py-1.5 rounded-lg bg-zinc-900/50 border border-zinc-800/50 text-xs font-medium text-zinc-300">
                   {tech}
                 </span>
               ))}
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4">
+              {project.liveUrl && (
+                <a 
+                  href={project.liveUrl} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-zinc-200 hover:scale-105 active:scale-95 transition-all shadow-lg"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Visit Website
+                </a>
+              )}
+              <a 
+                href={project.link} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 border border-zinc-800 text-white text-sm font-semibold hover:bg-zinc-800 hover:scale-105 active:scale-95 transition-all"
+              >
+                <GithubIcon className="h-4 w-4" />
+                Repository
+              </a>
             </div>
           </div>
         </div>
@@ -209,7 +208,7 @@ export const ProjectsSection = () => {
           transition={{ duration: 0.8 }}
           className="mb-20 flex flex-col items-center justify-center text-center sticky top-0 py-8 z-0"
         >
-          <h2 className="text-4xl font-bold text-white sm:text-6xl tracking-tighter">Selected Work</h2>
+          <h2 className="text-4xl font-bold text-white sm:text-6xl tracking-tighter">My Projects</h2>
           <div className="mt-6 h-1 w-24 rounded-full bg-zinc-800" />
         </motion.div>
 

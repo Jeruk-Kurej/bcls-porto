@@ -9,7 +9,7 @@ import Image from "next/image";
 export const HeroSection = () => {
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 500], [0, 150]);
-  const opacityParallax = useTransform(scrollY, [0, 300], [1, 0]);
+  const opacityParallax = useTransform(scrollY, [0, 800], [1, 0]);
 
   const handleScroll = () => {
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });

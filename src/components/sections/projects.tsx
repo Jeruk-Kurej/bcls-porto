@@ -1,28 +1,43 @@
 "use client";
 
-import { motion, AnimatePresence, useMotionValue, useMotionTemplate } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion";
 import { useState, useRef } from "react";
 import { GithubIcon } from "@/components/ui/icons";
 import { projectsData, Project } from "@/data/projects";
-import { 
-  ShoppingCart, Package, Users, BarChart, Shield,
-  Bot, Swords, FileText, Trophy, ShieldCheck,
-  BrainCircuit, Database, Cloud, Lock,
-  Calendar, BookOpen, Key, UsersRound,
-  ClipboardList, MessageSquare, BellRing, LayoutDashboard,
-  ChevronDown, Code2, Wrench
-} from "lucide-react";
+import { Laptop, Smartphone, Layers, Layout, Shield, Cloud } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const IconMap: Record<string, React.ElementType> = {
-  ShoppingCart, Package, Users, BarChart, Shield,
-  Bot, Swords, FileText, Trophy, ShieldCheck,
-  BrainCircuit, Database, Cloud, Lock,
-  Calendar, BookOpen, Key, UsersRound,
-  ClipboardList, MessageSquare, BellRing, LayoutDashboard,
-};
+const mockIcons = [
+  <Laptop key="1" className="w-20 h-20 text-white/50" />,
+  <Layers key="2" className="w-20 h-20 text-white/50" />,
+  <Layout key="3" className="w-20 h-20 text-white/50" />,
+  <Smartphone key="4" className="w-20 h-20 text-white/50" />,
+  <Smartphone key="5" className="w-20 h-20 text-white/50" />,
+  <Shield key="6" className="w-20 h-20 text-white/50" />,
+];
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const mockGradients = [
+  "from-blue-500/20 via-cyan-500/10 to-transparent",
+  "from-emerald-500/20 via-teal-500/10 to-transparent",
+  "from-purple-500/20 via-pink-500/10 to-transparent",
+  "from-orange-500/20 via-amber-500/10 to-transparent",
+  "from-rose-500/20 via-red-500/10 to-transparent",
+  "from-indigo-500/20 via-blue-500/10 to-transparent",
+];
+
+const ProjectCard = ({ 
+  project, 
+  index, 
+  progress, 
+  range, 
+  targetScale 
+}: { 
+  project: Project; 
+  index: number; 
+  progress: any; 
+  range: number[]; 
+  targetScale: number 
+}) => {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [opacity, setOpacity] = useState(0);
@@ -43,187 +58,141 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   const handleMouseEnter = () => { setOpacity(1); };
   const handleMouseLeave = () => { setOpacity(0); };
 
-  // Use motion template to avoid re-renders
-  const background = useMotionTemplate`radial-gradient(800px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,.06), transparent 40%)`;
+  const background = useMotionTemplate`radial-gradient(1000px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,.05), transparent 40%)`;
+  
+  // Scale down the card as the user scrolls past it
+  const scale = useTransform(progress, range, [1, targetScale]);
+
+  const Icon = mockIcons[index] || mockIcons[0];
+  const Gradient = mockGradients[index] || mockGradients[0];
 
   return (
-    <motion.div
-      ref={divRef}
-      onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      variants={{
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    <div 
+      className="sticky flex items-center justify-center pb-8" 
+      style={{ 
+        zIndex: index,
+        top: `calc(6rem + ${index * 1.5}rem)` // Dynamic top spacing creates a staggered deck effect
       }}
-      whileHover={{ scale: 1.03 }}
-      className="group relative overflow-hidden flex flex-col rounded-2xl border border-zinc-800/50 bg-zinc-950/50 p-6 md:p-8 shadow-2xl transition-all duration-500 hover:border-zinc-600/50 hover:shadow-[0_0_80px_rgba(59,130,246,0.15)] backdrop-blur-sm"
     >
       <motion.div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
-        style={{
-          opacity,
-          background,
-        }}
-      />
-      <div className="relative z-10 flex flex-col h-full transition-transform duration-500 ease-out group-hover:scale-[1.02]">
-      <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
-        <div>
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h3>
-          <p className="text-zinc-400 font-medium text-sm md:text-base">{project.subtitle}</p>
-        </div>
-        <a 
-          href={project.link} 
-          target="_blank" 
-          rel="noreferrer" 
-          className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 text-sm font-medium text-white transition-all border border-white/5 hover:border-white/20"
-        >
-          <GithubIcon className="h-4 w-4" />
-          Repository
-        </a>
-      </div>
-
-      <p className="text-zinc-300 leading-relaxed text-sm md:text-base mb-8">
-        {project.about}
-      </p>
-
-      {/* Accordion Toggle */}
-      <button 
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="flex items-center justify-between w-full p-4 rounded-xl bg-zinc-900/50 border border-zinc-800/50 hover:bg-zinc-800/50 transition-colors mb-8"
+        style={{ scale }}
+        ref={divRef}
+        onMouseMove={handleMouseMove}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="group relative flex flex-col md:flex-row w-full overflow-hidden rounded-[2rem] border border-zinc-800/80 bg-black shadow-[0_-20px_40px_rgba(0,0,0,0.8)] min-h-[450px]"
       >
-        <span className="font-semibold text-white">The Problem & The Solution</span>
         <motion.div
-          animate={{ rotate: isExpanded ? 180 : 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        >
-          <ChevronDown className="h-5 w-5 text-zinc-400" />
-        </motion.div>
-      </button>
-
-      {/* Accordion Content */}
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden"
-          >
-            <div className="flex flex-col gap-6 pb-8 border-b border-zinc-800/50 mb-8">
-              <div>
-                <h4 className="text-red-400 font-semibold mb-2 text-sm uppercase tracking-wider">The Problem</h4>
-                <p className="text-zinc-400 leading-relaxed text-sm">{project.problem}</p>
-              </div>
-              <div>
-                <h4 className="text-emerald-400 font-semibold mb-2 text-sm uppercase tracking-wider">The Solution</h4>
-                <p className="text-zinc-400 leading-relaxed text-sm">{project.solution}</p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-auto">
-        {/* Features Column */}
-        <div className="lg:col-span-2">
-          <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-            <span className="h-6 w-1 rounded-full bg-blue-500"></span>
-            Core Features
-          </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {project.features.map((feature, i) => {
-              const IconComponent = feature.icon ? IconMap[feature.icon] : null;
-              return (
-                <div key={i} className="group/feature flex items-start gap-3 p-3 rounded-lg bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04] transition-colors">
-                  {IconComponent && (
-                    <motion.div 
-                      whileHover={{ rotate: 15, scale: 1.2 }}
-                      transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                      className="mt-0.5 p-1.5 rounded-md bg-white/10 text-zinc-300 group-hover/feature:text-blue-400 transition-colors"
-                    >
-                      <IconComponent className="h-4 w-4" />
-                    </motion.div>
-                  )}
-                  <div>
-                    <h5 className="text-white text-sm font-medium mb-1 group-hover/feature:text-blue-400 transition-colors">{feature.title}</h5>
-                    <p className="text-zinc-500 text-xs leading-relaxed">{feature.description}</p>
-                  </div>
-                </div>
-              );
-            })}
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-10"
+          style={{ opacity, background }}
+        />
+        
+        {/* Media / Mockup Region (Left side on desktop, Top on mobile) */}
+        <div className={cn("relative w-full md:w-1/2 flex items-center justify-center overflow-hidden bg-gradient-to-br min-h-[250px] md:min-h-full border-b md:border-b-0 md:border-r border-zinc-800/50", Gradient)}>
+          <div className="absolute inset-0 bg-black/30 z-0"></div>
+          <div className="absolute inset-0 z-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '32px 32px' }}></div>
+          
+          <div className="relative z-10 transition-transform duration-700 ease-out group-hover:scale-110 drop-shadow-2xl">
+            {Icon}
           </div>
+          
+          <a 
+            href={project.link} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="absolute bottom-6 z-20 flex translate-y-8 opacity-0 items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-sm font-semibold text-white transition-all duration-500 border border-white/10 hover:border-white/30 group-hover:translate-y-0 group-hover:opacity-100"
+          >
+            <GithubIcon className="h-4 w-4" />
+            View Repository
+          </a>
         </div>
 
-        {/* Tech Stack & Tools Column */}
-        <div className="flex flex-col gap-6">
-          <div>
-            <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-              <Code2 className="h-4 w-4 text-zinc-400" />
-              Tech Stack
-            </h4>
+        {/* Content Region (Right side on desktop, Bottom on mobile) */}
+        <div className="relative z-10 w-full md:w-1/2 flex flex-col p-8 md:p-12">
+          <div className="mb-4">
+            <span className="inline-block px-3 py-1 mb-4 rounded-full bg-zinc-900 border border-zinc-800 text-xs font-semibold text-zinc-400 tracking-wider uppercase">
+              Project 0{index + 1}
+            </span>
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">{project.title}</h3>
+            <p className="text-zinc-400 font-medium text-base md:text-lg">{project.subtitle}</p>
+          </div>
+          
+          <p className="text-zinc-500 leading-relaxed text-sm md:text-base line-clamp-4 mb-8">
+            {project.about}
+          </p>
+          
+          <div className="mt-auto">
+            <h4 className="text-zinc-300 font-semibold text-sm mb-3 uppercase tracking-wider">Technologies Used</h4>
             <div className="flex flex-wrap gap-2">
               {project.techStack.map((tech, i) => (
-                <span key={i} className="px-2.5 py-1 rounded-md bg-zinc-800/50 border border-zinc-700/50 text-xs font-medium text-zinc-300">
+                <span key={i} className="px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800/50 text-xs font-medium text-zinc-300">
                   {tech}
                 </span>
               ))}
             </div>
           </div>
-          <div>
-            <h4 className="text-white font-semibold mb-4 flex items-center gap-2">
-              <Wrench className="h-4 w-4 text-zinc-400" />
-              Tools & Environment
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {project.tools.map((tool, i) => (
-                <span key={i} className="px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-xs font-medium text-zinc-400">
-                  {tool}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
-      </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };
 
 export const ProjectsSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Track scroll progress through the entire section
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
   return (
-    <section id="projects" className="relative w-full bg-transparent py-20 px-4 md:px-8 pb-40">
-      <div className="mx-auto max-w-5xl">
+    <section id="projects" className="relative w-full bg-transparent py-24 px-4 md:px-8">
+      {/* 
+        The container needs to be very tall to allow scrolling. 
+        We use padding bottom so the last card has room to stick.
+      */}
+      <div ref={containerRef} className="mx-auto max-w-6xl pb-[10vh]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8 }}
-          className="mb-16 flex flex-col items-center justify-center text-center"
+          className="mb-20 flex flex-col items-center justify-center text-center sticky top-0 py-8 z-0"
         >
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">My Projects</h2>
-          <div className="mt-2 h-1 w-20 rounded bg-zinc-800" />
+          <h2 className="text-4xl font-bold text-white sm:text-6xl tracking-tighter">Selected Work</h2>
+          <div className="mt-6 h-1 w-24 rounded-full bg-zinc-800" />
         </motion.div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: { staggerChildren: 0.15 },
-            },
-          }}
-          className="flex flex-col gap-10"
-        >
-          {projectsData.map((project, idx) => (
-            <ProjectCard key={project.id} project={project} index={idx} />
-          ))}
-        </motion.div>
+        {/* 
+          Cards Container: 
+          Uses flex-col. As we scroll, cards stick to the top. 
+          We add gap-[50vh] so there's a huge scroll distance before the next card arrives, 
+          giving the user plenty of time to read the current card without it being covered.
+        */}
+        <div className="relative flex flex-col mt-10 gap-[50vh]">
+          {projectsData.map((project, idx) => {
+            // Target scale decreases by 4% per card that stacks on top
+            const targetScale = 1 - ((projectsData.length - idx) * 0.04);
+            
+            // The range during which this specific card scales down.
+            // It starts scaling when it reaches the top, which roughly correlates to its index.
+            const range = [idx * (1 / projectsData.length), 1];
+
+            return (
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+                index={idx} 
+                progress={scrollYProgress}
+                range={range}
+                targetScale={targetScale}
+              />
+            );
+          })}
+        </div>
       </div>
     </section>
   );

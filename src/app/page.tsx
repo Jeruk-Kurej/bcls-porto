@@ -1,5 +1,6 @@
 import { HeroSection } from "@/components/sections/hero";
 import { AboutSection } from "@/components/sections/about";
+import { ExperienceSection } from "@/components/sections/experience";
 import { ProjectsSection } from "@/components/sections/projects";
 import { FooterSection } from "@/components/sections/footer";
 import { Particles } from "@/components/ui/particles";
@@ -16,6 +17,7 @@ export default function Home() {
       <div className="z-10 relative flex flex-col">
         <HeroSection />
         <AboutSection />
+        <ExperienceSection />
         <ProjectsSection />
         <FooterSection />
       </div>

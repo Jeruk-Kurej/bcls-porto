@@ -1,7 +1,6 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -12,26 +11,6 @@ const navItems = [
 ];
 
 export const FloatingNav = () => {
-  const { scrollYProgress } = useScroll();
-  const [visible, setVisible] = useState(true);
-
-  useMotionValueEvent(scrollYProgress, "change", (current) => {
-    // Check if current is not undefined and is a number
-    if (typeof current === "number") {
-      let direction = current! - scrollYProgress.getPrevious()!;
-
-      if (scrollYProgress.get() < 0.05) {
-        setVisible(true);
-      } else {
-        if (direction < 0) {
-          setVisible(true);
-        } else {
-          setVisible(false);
-        }
-      }
-    }
-  });
-
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const target = document.querySelector(href);
@@ -66,7 +45,7 @@ export const FloatingNav = () => {
   return (
     <motion.div 
       initial={{ y: -100, opacity: 0 }}
-      animate={{ y: visible ? 0 : -100, opacity: visible ? 1 : 0 }}
+      animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, type: "spring", stiffness: 100, damping: 20 }}
       className="fixed top-6 left-1/2 -translate-x-1/2 z-[999]"
     >

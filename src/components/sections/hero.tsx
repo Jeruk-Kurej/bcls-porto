@@ -1,6 +1,6 @@
 "use client";
 
-import { Spotlight } from "@/components/ui/spotlight";
+
 import { MagneticButton } from "@/components/ui/magnetic-button";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -12,10 +12,7 @@ export const HeroSection = () => {
 
   return (
     <section id="hero" className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-transparent antialiased">
-      <Spotlight
-        className="-top-40 left-0 md:-top-20 md:left-60"
-        fill="white"
-      />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-black to-black opacity-80 pointer-events-none"></div>
 
       <motion.div
         initial="hidden"
@@ -61,7 +58,10 @@ export const HeroSection = () => {
           variants={{ hidden: { opacity: 0, scale: 0.8 }, visible: { opacity: 1, scale: 1 } }}
           className="mt-4 relative z-20"
         >
-          <MagneticButton onClick={handleScroll}>
+          <MagneticButton 
+            onClick={handleScroll}
+            className="border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:bg-white/10 hover:border-white/40 transition-all duration-300"
+          >
             View My Work
           </MagneticButton>
         </motion.div>

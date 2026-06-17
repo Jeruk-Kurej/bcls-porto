@@ -44,8 +44,6 @@ export const MagneticButton = ({
       onClick={onClick}
     >
       <span className="relative z-10">{children}</span>
-      {/* Subtle hover glow */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
     </motion.button>
   );
 };

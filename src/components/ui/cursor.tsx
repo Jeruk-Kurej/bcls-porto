@@ -1,11 +1,23 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const SplashCursor = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [hasPointer, setHasPointer] = useState(false);
 
   useEffect(() => {
+    const mql = window.matchMedia("(pointer: fine)");
+    setHasPointer(mql.matches);
+    
+    const handler = (e: MediaQueryListEvent) => setHasPointer(e.matches);
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    if (!hasPointer) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -96,7 +108,9 @@ export const SplashCursor = () => {
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [hasPointer]);
+
+  if (!hasPointer) return null;
 
   return (
     <canvas

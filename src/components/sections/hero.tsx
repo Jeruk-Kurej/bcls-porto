@@ -3,10 +3,14 @@
 
 import { Spotlight } from "@/components/ui/spotlight";
 import { MagneticButton } from "@/components/ui/magnetic-button";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export const HeroSection = () => {
+  const { scrollY } = useScroll();
+  const yParallax = useTransform(scrollY, [0, 500], [0, 150]);
+  const opacityParallax = useTransform(scrollY, [0, 300], [1, 0]);
+
   const handleScroll = () => {
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -19,6 +23,7 @@ export const HeroSection = () => {
       <motion.div
         initial="hidden"
         animate="visible"
+        style={{ y: yParallax, opacity: opacityParallax }}
         variants={{
           hidden: { opacity: 0 },
           visible: {

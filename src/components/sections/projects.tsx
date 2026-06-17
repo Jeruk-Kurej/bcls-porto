@@ -58,8 +58,8 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
         hidden: { opacity: 0, y: 40 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
       }}
-      whileHover={{ scale: 1.02 }}
-      className="group relative overflow-hidden flex flex-col rounded-2xl border border-zinc-800/50 bg-zinc-950/50 p-6 md:p-8 shadow-2xl transition-all duration-300 hover:border-zinc-700/50 hover:shadow-[0_0_50px_rgba(59,130,246,0.1)] backdrop-blur-sm"
+      whileHover={{ scale: 1.03 }}
+      className="group relative overflow-hidden flex flex-col rounded-2xl border border-zinc-800/50 bg-zinc-950/50 p-6 md:p-8 shadow-2xl transition-all duration-500 hover:border-zinc-600/50 hover:shadow-[0_0_80px_rgba(59,130,246,0.15)] backdrop-blur-sm"
     >
       <motion.div
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
@@ -68,7 +68,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
           background,
         }}
       />
-      <div className="relative z-10 flex flex-col h-full">
+      <div className="relative z-10 flex flex-col h-full transition-transform duration-500 ease-out group-hover:scale-[1.02]">
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
         <div>
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h3>
@@ -211,7 +211,7 @@ export const ProjectsSection = () => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={{
             hidden: {},
             visible: {

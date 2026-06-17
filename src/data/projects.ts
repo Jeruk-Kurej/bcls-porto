@@ -35,7 +35,7 @@ export const projectsData: Project[] = [
     techStack: ["Laravel 11 (PHP)", "React.js", "TypeScript", "Tailwind CSS", "Inertia.js", "MySQL"],
     tools: ["Docker", "Railway"],
     link: "https://github.com/Jeruk-Kurej/UC-Online-Learning",
-    images: ["/images/uco-1.png", "/images/uco-2.png", "/images/uco-3.png", "/images/uco-4.png"]
+    images: ["/images/uco/uco-1.png", "/images/uco/uco-2.png", "/images/uco/uco-3.png", "/images/uco/uco-4.png"]
   },
   {
     id: "gki-darmo-permai",
@@ -52,7 +52,8 @@ export const projectsData: Project[] = [
     ],
     techStack: ["Laravel (PHP)", "React.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "Pest PHP"],
     tools: ["Vercel", "GitHub Actions (CI/CD)"],
-    link: "https://github.com/Jeruk-Kurej/GKI-Darmo-Permai"
+    link: "https://github.com/Jeruk-Kurej/GKI-Darmo-Permai",
+    images: ["/images/gki/gki-1.png", "/images/gki/gki-2.png", "/images/gki/gki-3.png"]
   },
   {
     id: "yukdebat",

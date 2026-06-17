@@ -101,30 +101,39 @@ const ProjectCard = ({
           className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-10"
           style={{ opacity, background }}
         />
-        
         {/* Media / Mockup Region */}
         <div className={cn("relative w-full md:w-1/2 flex items-center justify-center overflow-hidden min-h-[250px] md:min-h-full border-b md:border-b-0 md:border-r border-zinc-800/50 bg-black", !hasImages && `bg-gradient-to-br ${Gradient}`)}>
-          
           {hasImages ? (
-            <div className="absolute inset-0 w-full h-full">
-              {project.images!.map((img, i) => (
-                <div 
-                  key={i}
-                  className={cn(
-                    "absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out",
-                    i === currentImageIdx ? "opacity-100" : "opacity-0"
-                  )}
-                >
-                  <Image 
-                    src={img} 
-                    alt={`${project.title} screenshot ${i + 1}`} 
-                    fill
-                    className="object-cover object-top opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
-                </div>
-              ))}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+            <div className="absolute inset-4 md:inset-8 rounded-xl border border-white/10 bg-zinc-900/50 shadow-2xl overflow-hidden flex flex-col backdrop-blur-md">
+              {/* Browser Header / Mockup Frame */}
+              <div className="h-8 w-full bg-zinc-800/50 backdrop-blur-md border-b border-white/5 flex items-center px-4 gap-2 shrink-0">
+                <div className="w-2.5 h-2.5 rounded-full bg-rose-500/80 shadow-[0_0_10px_rgba(244,63,94,0.4)]"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80 shadow-[0_0_10px_rgba(245,158,11,0.4)]"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 shadow-[0_0_10px_rgba(16,185,129,0.4)]"></div>
+              </div>
+              
+              {/* Browser Content */}
+              <div className="relative w-full h-full bg-zinc-950">
+                {project.images!.map((img, i) => (
+                  <div 
+                    key={i}
+                    className={cn(
+                      "absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out",
+                      i === currentImageIdx ? "opacity-100 z-10" : "opacity-0 z-0"
+                    )}
+                  >
+                    <Image 
+                      src={img} 
+                      alt={`${project.title} screenshot ${i + 1}`} 
+                      fill
+                      className="object-cover object-top opacity-90 transition-opacity duration-500"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                ))}
+                {/* Subtle gradient overlay at the bottom so it blends nicely */}
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent z-20 pointer-events-none"></div>
+              </div>
             </div>
           ) : (
             <>

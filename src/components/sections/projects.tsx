@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { GithubIcon } from "@/components/ui/icons";
 import { projectsData, Project } from "@/data/projects";
 import { 
@@ -23,15 +23,45 @@ const IconMap: Record<string, React.ElementType> = {
 
 const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current || isFocused) return;
+    const div = divRef.current;
+    const rect = div.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
+
+  const handleFocus = () => { setIsFocused(true); setOpacity(1); };
+  const handleBlur = () => { setIsFocused(false); setOpacity(0); };
+  const handleMouseEnter = () => { setOpacity(1); };
+  const handleMouseLeave = () => { setOpacity(0); };
 
   return (
     <motion.div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       variants={{
         hidden: { opacity: 0, y: 40 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
       }}
-      className="group relative flex flex-col rounded-2xl border border-zinc-800/50 bg-zinc-950/50 p-6 md:p-8 shadow-2xl transition-colors hover:border-zinc-700/50 backdrop-blur-sm"
+      className="group relative overflow-hidden flex flex-col rounded-2xl border border-zinc-800/50 bg-zinc-950/50 p-6 md:p-8 shadow-2xl transition-colors hover:border-zinc-700/50 backdrop-blur-sm"
     >
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
+        style={{
+          opacity,
+          background: `radial-gradient(800px circle at ${position.x}px ${position.y}px, rgba(255,255,255,.06), transparent 40%)`,
+        }}
+      />
+      <div className="relative z-10 flex flex-col h-full">
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-6">
         <div>
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h3>
@@ -150,6 +180,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             </div>
           </div>
         </div>
+      </div>
       </div>
     </motion.div>
   );

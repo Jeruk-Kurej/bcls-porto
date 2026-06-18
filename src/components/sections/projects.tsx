@@ -84,7 +84,7 @@ const ProjectCard = ({
       className="sticky flex items-center justify-center pb-8" 
       style={{ 
         zIndex: index,
-        top: `calc(6rem + ${index * 1.5}rem)` // Dynamic top spacing creates a staggered deck effect
+        top: `calc(8rem + ${index * 1.5}rem)` // Base offset 8rem, 1.5rem stagger creates a clear, beautiful stack
       }}
     >
       <motion.div
@@ -200,13 +200,13 @@ export const ProjectsSection = () => {
         The container needs to be very tall to allow scrolling. 
         We use padding bottom so the last card has room to stick.
       */}
-      <div ref={containerRef} className="mx-auto max-w-6xl pb-[10vh]">
+      <div ref={containerRef} className="mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8 }}
-          className="mb-20 flex flex-col items-center justify-center text-center sticky top-0 py-8 z-0"
+          className="mb-10 flex flex-col items-center justify-center text-center py-8 z-0"
         >
           <h2 className="text-4xl font-bold text-white sm:text-6xl tracking-tighter">My Projects</h2>
           <div className="mt-6 h-1 w-24 rounded-full bg-zinc-800" />

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://bcls.vercel.app"),
+  metadataBase: new URL("https://bryancarlie.vercel.app"),
   title: "Bryan Carlie Lukito Setiawan | Portfolio",
   description: "Full-Stack Application Developer specializing in iOS, Android, and Web applications. Explore my projects, journey, and technical toolkit.",
   keywords: ["Bryan Carlie", "Portfolio", "Full-Stack Developer", "Software Engineer", "iOS Developer", "Next.js", "React", "SwiftUI"],
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://bcls.vercel.app",
+    url: "https://bryancarlie.vercel.app",
     title: "Bryan Carlie Lukito Setiawan | Portfolio",
     description: "Full-Stack Application Developer specializing in iOS, Android, and Web applications. Explore my projects, journey, and technical toolkit.",
     siteName: "Bryan Carlie Portfolio",

@@ -1,22 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { BentoGridItem } from "@/components/ui/bento-grid";
 import { Server } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Marquee } from "@/components/ui/marquee";
 import { GitHubCalendar } from "react-github-calendar";
 import { GithubIcon } from "@/components/ui/icons";
+import { fadeInUp, reducedFadeInUp, staggerContainer, cardFadeInUp } from "@/lib/motion";
 
 export const AboutSection = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="capabilities" className="relative w-full bg-transparent py-20 px-4 md:px-8">
       <div className="mx-auto max-w-5xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={shouldReduceMotion ? reducedFadeInUp : fadeInUp}
+          initial={shouldReduceMotion ? "visible" : "hidden"}
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
           className="mb-12 flex flex-col items-center justify-center text-center"
         >
           <h2 className="text-3xl font-bold text-white sm:text-4xl">Technical Profile</h2>
@@ -27,22 +30,14 @@ export const AboutSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          variants={{
-            hidden: {},
-            visible: {
-              transition: { staggerChildren: 0.15 },
-            },
-          }}
+          variants={staggerContainer}
           className="grid md:auto-rows-[22rem] grid-cols-1 md:grid-cols-2 gap-8"
         >
           {items.map((item, i) => (
             <motion.div
               key={i}
               className={item.className}
-              variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-              }}
+              variants={cardFadeInUp}
             >
               <BentoGridItem
                 title={item.title}
@@ -79,9 +74,10 @@ const githubTheme = {
   dark: ['#18181b', '#064e3b', '#047857', '#10b981', '#34d399'],
 };
 
+const emptySubscribe = () => () => {};
+
 const GithubCalendarComponent = () => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
   
   if (!mounted) return <div className="h-[120px] w-full animate-pulse bg-zinc-800/20 rounded-lg"></div>;
   

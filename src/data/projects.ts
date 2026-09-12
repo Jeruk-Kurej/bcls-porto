@@ -13,7 +13,6 @@ export type Project = {
   solution: string;
   features: ProjectFeature[];
   techStack: string[];
-  tools: string[];
   link: string;
   liveUrl?: string;
   images?: string[];
@@ -34,7 +33,6 @@ export const projectsData: Project[] = [
       { title: "Role-Based Workflows", description: "Secure admin panel for reviewing, approving, or rejecting business profile submissions.", icon: "Lock" },
     ],
     techStack: ["Laravel 11 (PHP)", "React.js", "TypeScript", "Tailwind CSS", "Inertia.js", "MySQL"],
-    tools: ["Docker", "Railway"],
     link: "https://github.com/Jeruk-Kurej/UC-Online-Learning",
     liveUrl: "https://uco-web.vercel.app",
     images: ["/images/uco/uco-1.png", "/images/uco/uco-2.png", "/images/uco/uco-3.png", "/images/uco/uco-4.png"]
@@ -53,7 +51,6 @@ export const projectsData: Project[] = [
       { title: "Team Management", description: "Advanced permission and role management system for different church committees.", icon: "UsersRound" },
     ],
     techStack: ["Laravel (PHP)", "React.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "Pest PHP"],
-    tools: ["Vercel", "GitHub Actions (CI/CD)"],
     link: "https://github.com/Jeruk-Kurej/GKI-Darmo-Permai",
     liveUrl: "https://gki-darmo-permai.vercel.app",
     images: ["/images/gki/gki-1.png", "/images/gki/gki-2.png", "/images/gki/gki-3.png"]
@@ -73,7 +70,6 @@ export const projectsData: Project[] = [
       { title: "Admin Moderation Dashboard", description: "Built-in moderation tools to approve adjudicator requests and manage public notes.", icon: "ShieldCheck" },
     ],
     techStack: ["Swift", "SwiftUI (MVVM)", "Firebase", "Google Gemini API", "CoreData / SwiftData"],
-    tools: ["Xcode", "Swift Package Manager"],
     link: "https://github.com/Jeruk-Kurej/YukDebat"
   },
   {
@@ -89,7 +85,6 @@ export const projectsData: Project[] = [
       { title: "Real-Time Tracking", description: "Live updates for cashflow and customer interactions.", icon: "BarChart" },
     ],
     techStack: ["Swift", "SwiftUI", "SwiftData", "Firebase"],
-    tools: ["Xcode", "Swift Package Manager"],
     link: "https://github.com/Jeruk-Kurej/Dagify"
   },
   {
@@ -106,7 +101,6 @@ export const projectsData: Project[] = [
       { title: "Multi-User Security", description: "Robust JWT authentication and strictly isolated data access per user/branch.", icon: "Shield" },
     ],
     techStack: ["Kotlin", "Jetpack Compose", "MVVM", "Node.js", "Prisma"],
-    tools: ["Android Studio", "GitHub", "Gradle"],
     link: "https://github.com/Jeruk-Kurej/Sum-O"
   },
   {
@@ -123,7 +117,6 @@ export const projectsData: Project[] = [
       { title: "Multi-Tenant Dashboards", description: "Dedicated, customized UI views for Admins, Customers, and Technicians.", icon: "LayoutDashboard" },
     ],
     techStack: ["Next.js (App Router)", "React", "TypeScript", "Prisma ORM", "NextAuth.js", "Tailwind CSS"],
-    tools: ["Vercel", "PostgreSQL"],
     link: "https://github.com/Jeruk-Kurej/FixIt",
     liveUrl: "https://fix-it-project.vercel.app"
   }

@@ -1,27 +1,38 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from "react";
+import { useReducedMotion } from "framer-motion";
+
+const subscribePointer = (callback: () => void) => {
+  if (typeof window === "undefined") return () => {};
+  const mql = window.matchMedia("(pointer: fine)");
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+};
+
+const getPointerSnapshot = () => {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(pointer: fine)").matches;
+};
+
+const getPointerServerSnapshot = () => false;
 
 export const SplashCursor = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [hasPointer, setHasPointer] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
+  const hasPointer = useSyncExternalStore(
+    subscribePointer,
+    getPointerSnapshot,
+    getPointerServerSnapshot
+  );
 
   useEffect(() => {
-    const mql = window.matchMedia("(pointer: fine)");
-    setHasPointer(mql.matches);
-    
-    const handler = (e: MediaQueryListEvent) => setHasPointer(e.matches);
-    mql.addEventListener("change", handler);
-    return () => mql.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
-    if (!hasPointer) return;
+    if (!hasPointer || shouldReduceMotion) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     let width = window.innerWidth;
@@ -29,8 +40,8 @@ export const SplashCursor = () => {
     canvas.width = width;
     canvas.height = height;
 
-    let pointer = { x: width / 2, y: height / 2 };
-    let params = {
+    const pointer = { x: width / 2, y: height / 2 };
+    const params = {
       pointsNumber: 40,
       widthFactor: 0.3,
       mouseThreshold: 0.6,
@@ -38,7 +49,7 @@ export const SplashCursor = () => {
       friction: 0.5,
     };
 
-    let trail = new Array(params.pointsNumber).fill(null).map(() => ({
+    const trail = new Array(params.pointsNumber).fill(null).map(() => ({
       x: pointer.x,
       y: pointer.y,
       dx: 0,
@@ -50,30 +61,30 @@ export const SplashCursor = () => {
       pointer.y = e.clientY;
     };
 
-    window.addEventListener('mousemove', updateMousePosition);
+    window.addEventListener("mousemove", updateMousePosition);
 
     let animationFrameId: number;
 
     const update = (t: number) => {
       ctx.clearRect(0, 0, width, height);
-      
+
       trail[0].x = pointer.x;
       trail[0].y = pointer.y;
 
       for (let i = 1; i < params.pointsNumber; i++) {
         const dx = trail[i - 1].x - trail[i].x;
         const dy = trail[i - 1].y - trail[i].y;
-        
+
         trail[i].dx += dx * params.spring;
         trail[i].dy += dy * params.spring;
         trail[i].dx *= params.friction;
         trail[i].dy *= params.friction;
-        
+
         trail[i].x += trail[i].dx;
         trail[i].y += trail[i].dy;
       }
 
-      ctx.lineCap = 'round';
+      ctx.lineCap = "round";
       ctx.beginPath();
       ctx.moveTo(trail[0].x, trail[0].y);
 
@@ -88,7 +99,7 @@ export const SplashCursor = () => {
       }
       ctx.lineTo(trail[params.pointsNumber - 1].x, trail[params.pointsNumber - 1].y);
       ctx.stroke();
-      
+
       animationFrameId = requestAnimationFrame(update);
     };
 
@@ -101,22 +112,22 @@ export const SplashCursor = () => {
       canvas.height = height;
     };
 
-    window.addEventListener('resize', resize);
+    window.addEventListener("resize", resize);
 
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('resize', resize);
+      window.removeEventListener("mousemove", updateMousePosition);
+      window.removeEventListener("resize", resize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [hasPointer]);
+  }, [hasPointer, shouldReduceMotion]);
 
-  if (!hasPointer) return null;
+  if (!hasPointer || shouldReduceMotion) return null;
 
   return (
     <canvas
       ref={canvasRef}
       className="pointer-events-none fixed inset-0 z-[9999]"
-      style={{ mixBlendMode: 'screen' }}
+      style={{ mixBlendMode: "screen" }}
     />
   );
 };

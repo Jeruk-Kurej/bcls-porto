@@ -1,9 +1,10 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { experienceData, ExperienceCategory } from "@/data/experience";
 import { Briefcase, Users, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { fadeInUp, reducedFadeInUp } from "@/lib/motion";
 
 const CategoryBadge = ({ category }: { category: ExperienceCategory }) => {
   let colorClass = "";
@@ -33,14 +34,16 @@ const CategoryBadge = ({ category }: { category: ExperienceCategory }) => {
 };
 
 export const ExperienceSection = () => {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section id="experience" className="relative w-full py-24 px-4 md:px-8 z-10">
       <div className="mx-auto max-w-4xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={shouldReduceMotion ? reducedFadeInUp : fadeInUp}
+          initial={shouldReduceMotion ? "visible" : "hidden"}
+          whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8 }}
           className="mb-16 flex flex-col items-center justify-center text-center"
         >
           <h2 className="text-4xl font-bold text-white sm:text-5xl tracking-tighter">Experience & Journey</h2>
@@ -55,10 +58,10 @@ export const ExperienceSection = () => {
             {experienceData.map((item, index) => (
               <motion.div
                 key={item.id}
-                initial={{ opacity: 0, y: 30, x: -20 }}
+                initial={shouldReduceMotion ? { opacity: 1, y: 0, x: 0 } : { opacity: 0, y: 30, x: -20 }}
                 whileInView={{ opacity: 1, y: 0, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.1 }}
                 className="relative pl-14 md:pl-24"
               >
                 {/* Timeline Node */}
@@ -66,7 +69,7 @@ export const ExperienceSection = () => {
                 
                 {/* Outer Glow effect wrapper for hover */}
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={shouldReduceMotion ? undefined : { scale: 1.02 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   className="group relative"
                 >

@@ -13,8 +13,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bcls.vercel.app"),
   title: "Bryan Carlie Lukito Setiawan | Portfolio",
-  description: "Full Stack Application Developer Portfolio",
+  description: "Full-Stack Application Developer specializing in iOS, Android, and Web applications. Explore my projects, journey, and technical toolkit.",
+  keywords: ["Bryan Carlie", "Portfolio", "Full-Stack Developer", "Software Engineer", "iOS Developer", "Next.js", "React", "SwiftUI"],
+  authors: [{ name: "Bryan Carlie Lukito Setiawan", url: "https://github.com/Jeruk-Kurej" }],
+  creator: "Bryan Carlie Lukito Setiawan",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://bcls.vercel.app",
+    title: "Bryan Carlie Lukito Setiawan | Portfolio",
+    description: "Full-Stack Application Developer specializing in iOS, Android, and Web applications. Explore my projects, journey, and technical toolkit.",
+    siteName: "Bryan Carlie Portfolio",
+    images: [
+      {
+        url: "https://avatars.githubusercontent.com/u/191065390?v=4",
+        width: 460,
+        height: 460,
+        alt: "Bryan Carlie Lukito Setiawan",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bryan Carlie Lukito Setiawan | Portfolio",
+    description: "Full-Stack Application Developer specializing in iOS, Android, and Web applications.",
+    images: ["https://avatars.githubusercontent.com/u/191065390?v=4"],
+  },
 };
 
 export default function RootLayout({

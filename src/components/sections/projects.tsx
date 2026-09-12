@@ -1,12 +1,71 @@
 "use client";
 
-import { motion, useScroll, useTransform, useMotionTemplate, useMotionValue } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { GithubIcon } from "@/components/ui/icons";
 import { projectsData, Project } from "@/data/projects";
-import { Laptop, Smartphone, Layers, Layout, Shield, Cloud, ExternalLink } from "lucide-react";
+import { useSpotlightEffect } from "@/hooks/use-spotlight-effect";
+import { fadeInUp, reducedFadeInUp } from "@/lib/motion";
+import { 
+  Laptop, 
+  Smartphone, 
+  Layers, 
+  Layout, 
+  Shield, 
+  Cloud, 
+  ExternalLink,
+  BrainCircuit,
+  Database,
+  Lock,
+  Calendar,
+  BookOpen,
+  Key,
+  UsersRound,
+  Bot,
+  Swords,
+  FileText,
+  Trophy,
+  ShieldCheck,
+  Users,
+  BarChart,
+  ShoppingCart,
+  Package,
+  ClipboardList,
+  MessageSquare,
+  BellRing,
+  LayoutDashboard,
+  ChevronDown,
+  ChevronUp,
+  Sparkles,
+  type LucideIcon
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const featureIconMap: Record<string, LucideIcon> = {
+  BrainCircuit,
+  Database,
+  Cloud,
+  Lock,
+  Calendar,
+  BookOpen,
+  Key,
+  UsersRound,
+  Bot,
+  Swords,
+  FileText,
+  Trophy,
+  ShieldCheck,
+  Users,
+  BarChart,
+  ShoppingCart,
+  Package,
+  Shield,
+  ClipboardList,
+  MessageSquare,
+  BellRing,
+  LayoutDashboard,
+};
 
 const mockIcons = [
   <Laptop key="1" className="w-20 h-20 text-white/50" />,
@@ -35,14 +94,14 @@ const ProjectCard = ({
 }: { 
   project: Project; 
   index: number; 
-  progress: any; 
+  progress: MotionValue<number>; 
   range: number[]; 
   targetScale: number 
 }) => {
-  const divRef = useRef<HTMLDivElement>(null);
-  const [isFocused, setIsFocused] = useState(false);
-  const [opacity, setOpacity] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
+  const { divRef, background, opacity, handlers } = useSpotlightEffect(1000, "rgba(255,255,255,.05)");
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     if (project.images && project.images.length > 1) {
@@ -53,24 +112,6 @@ const ProjectCard = ({
     }
   }, [project.images]);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!divRef.current || isFocused) return;
-    const div = divRef.current;
-    const rect = div.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
-  };
-
-  const handleFocus = () => { setIsFocused(true); setOpacity(1); };
-  const handleBlur = () => { setIsFocused(false); setOpacity(0); };
-  const handleMouseEnter = () => { setOpacity(1); };
-  const handleMouseLeave = () => { setOpacity(0); };
-
-  const background = useMotionTemplate`radial-gradient(1000px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,.05), transparent 40%)`;
-  
   // Scale down the card as the user scrolls past it
   const scale = useTransform(progress, range, [1, targetScale]);
 
@@ -88,13 +129,9 @@ const ProjectCard = ({
       }}
     >
       <motion.div
-        style={{ scale }}
+        style={{ scale: shouldReduceMotion ? 1 : scale }}
         ref={divRef}
-        onMouseMove={handleMouseMove}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        {...handlers}
         className="group relative flex flex-col md:flex-row w-full overflow-hidden rounded-[2rem] border border-zinc-800/80 bg-zinc-950 shadow-[0_-20px_40px_rgba(0,0,0,0.8)] min-h-[450px]"
       >
         <motion.div
@@ -103,7 +140,7 @@ const ProjectCard = ({
         />
         
         {/* Clean Split Media Region */}
-        <div className={cn("relative w-full md:w-1/2 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-zinc-800/80 bg-black", !hasImages && `bg-gradient-to-br ${Gradient}`)}>
+        <div className={cn("relative w-full md:w-1/2 flex items-center justify-center overflow-hidden border-b md:border-b-0 md:border-r border-zinc-800/80 bg-black min-h-[280px] md:min-h-[450px]", !hasImages && `bg-gradient-to-br ${Gradient}`)}>
           {hasImages ? (
             <div className="absolute inset-0 w-full h-full z-0">
               {project.images!.map((img, i) => (
@@ -136,35 +173,102 @@ const ProjectCard = ({
         </div>
 
         {/* Content Region */}
-        <div className="relative z-10 w-full md:w-1/2 flex flex-col p-8 md:p-12 bg-zinc-950">
-          <div className="mb-4">
-            <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">{project.title}</h3>
-            <p className="text-zinc-400 font-medium text-base md:text-lg">{project.subtitle}</p>
+        <div className="relative z-10 w-full md:w-1/2 flex flex-col p-6 sm:p-8 md:p-10 bg-zinc-950 justify-between">
+          <div>
+            <div className="mb-3">
+              <h3 className="text-2xl sm:text-3xl font-bold text-white mb-1.5 tracking-tight">{project.title}</h3>
+              <p className="text-zinc-400 font-medium text-sm sm:text-base">{project.subtitle}</p>
+            </div>
+            
+            <p className={cn("text-zinc-400 leading-relaxed text-xs sm:text-sm mb-4", !isExpanded && "line-clamp-2 sm:line-clamp-3")}>
+              {project.about}
+            </p>
+
+            {/* Problem & Solution Block */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-4 p-3 rounded-xl bg-zinc-900/40 border border-zinc-800/60 text-xs">
+              <div className="space-y-1">
+                <span className="font-semibold text-rose-400/90 flex items-center gap-1.5 uppercase tracking-wider text-[10px]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-400 shrink-0" />
+                  Problem
+                </span>
+                <p className={cn("text-zinc-400 text-[11px] sm:text-xs leading-relaxed", !isExpanded && "line-clamp-2 sm:line-clamp-3")}>
+                  {project.problem}
+                </p>
+              </div>
+              <div className="space-y-1">
+                <span className="font-semibold text-emerald-400/90 flex items-center gap-1.5 uppercase tracking-wider text-[10px]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                  Solution
+                </span>
+                <p className={cn("text-zinc-400 text-[11px] sm:text-xs leading-relaxed", !isExpanded && "line-clamp-2 sm:line-clamp-3")}>
+                  {project.solution}
+                </p>
+              </div>
+            </div>
+
+            {/* Key Features List */}
+            {project.features && project.features.length > 0 && (
+              <div className="mb-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="text-zinc-500 font-semibold text-[11px] uppercase tracking-wider">Key Features</h4>
+                  {project.features.length > 2 && (
+                    <button
+                      type="button"
+                      onClick={() => setIsExpanded(!isExpanded)}
+                      className="inline-flex items-center gap-1 text-[11px] font-medium text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                      aria-expanded={isExpanded}
+                    >
+                      {isExpanded ? (
+                        <>
+                          Show less <ChevronUp className="w-3 h-3" />
+                        </>
+                      ) : (
+                        <>
+                          +{project.features.length - 2} more <ChevronDown className="w-3 h-3" />
+                        </>
+                      )}
+                    </button>
+                  )}
+                </div>
+                <div className="grid grid-cols-1 gap-2">
+                  {(isExpanded ? project.features : project.features.slice(0, 2)).map((feature, fIdx) => {
+                    const FeatureIcon = (feature.icon && featureIconMap[feature.icon]) || Sparkles;
+                    return (
+                      <div key={fIdx} className="flex items-start gap-2.5 p-2 rounded-lg bg-zinc-900/30 border border-zinc-800/40">
+                        <div className="p-1 rounded-md bg-zinc-800/80 text-blue-400 shrink-0 mt-0.5">
+                          <FeatureIcon className="w-3.5 h-3.5" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <h5 className="text-xs font-medium text-zinc-200 truncate">{feature.title}</h5>
+                          <p className="text-[11px] text-zinc-400 line-clamp-1 sm:line-clamp-2 leading-relaxed">{feature.description}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
           
-          <p className="text-zinc-400 leading-relaxed text-sm md:text-base line-clamp-4 mb-8">
-            {project.about}
-          </p>
-          
-          <div className="mt-auto">
-            <h4 className="text-zinc-500 font-semibold text-xs mb-3 uppercase tracking-wider">Technologies Used</h4>
-            <div className="flex flex-wrap gap-2 mb-8">
+          <div className="pt-2">
+            <h4 className="text-zinc-500 font-semibold text-[11px] mb-2 uppercase tracking-wider">Technologies Used</h4>
+            <div className="flex flex-wrap gap-1.5 mb-6">
               {project.techStack.map((tech, i) => (
-                <span key={i} className="px-3 py-1.5 rounded-lg bg-zinc-900/50 border border-zinc-800/50 text-xs font-medium text-zinc-300">
+                <span key={i} className="px-2.5 py-1 rounded-md bg-zinc-900/60 border border-zinc-800/60 text-[11px] font-medium text-zinc-300">
                   {tech}
                 </span>
               ))}
             </div>
 
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="flex flex-wrap items-center gap-3">
               {project.liveUrl && (
                 <a 
                   href={project.liveUrl} 
                   target="_blank" 
                   rel="noreferrer" 
-                  className="flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black text-sm font-semibold hover:bg-zinc-200 hover:scale-105 active:scale-95 transition-all shadow-lg"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-black text-xs sm:text-sm font-semibold hover:bg-zinc-200 hover:scale-105 active:scale-95 transition-all shadow-lg"
                 >
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="w-3.5 h-3.5" />
                   Visit Website
                 </a>
               )}
@@ -172,9 +276,9 @@ const ProjectCard = ({
                 href={project.link} 
                 target="_blank" 
                 rel="noreferrer" 
-                className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-900 border border-zinc-800 text-white text-sm font-semibold hover:bg-zinc-800 hover:scale-105 active:scale-95 transition-all"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-zinc-900 border border-zinc-800 text-white text-xs sm:text-sm font-semibold hover:bg-zinc-800 hover:scale-105 active:scale-95 transition-all"
               >
-                <GithubIcon className="h-4 w-4" />
+                <GithubIcon className="h-3.5 w-3.5" />
                 Repository
               </a>
             </div>
@@ -186,6 +290,7 @@ const ProjectCard = ({
 };
 
 export const ProjectsSection = () => {
+  const shouldReduceMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Track scroll progress through the entire section
@@ -202,10 +307,10 @@ export const ProjectsSection = () => {
       */}
       <div ref={containerRef} className="mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={shouldReduceMotion ? reducedFadeInUp : fadeInUp}
+          initial={shouldReduceMotion ? "visible" : "hidden"}
+          whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8 }}
           className="mb-10 flex flex-col items-center justify-center text-center py-8 z-0"
         >
           <h2 className="text-4xl font-bold text-white sm:text-6xl tracking-tighter">My Projects</h2>

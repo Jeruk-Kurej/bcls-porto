@@ -3,16 +3,19 @@
 
 import { Spotlight } from "@/components/ui/spotlight";
 import { MagneticButton } from "@/components/ui/magnetic-button";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 export const HeroSection = () => {
+  const shouldReduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 500], [0, 150]);
   const opacityParallax = useTransform(scrollY, [0, 800], [1, 0]);
 
   const handleScroll = () => {
-    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("projects")?.scrollIntoView({ 
+      behavior: shouldReduceMotion ? "auto" : "smooth" 
+    });
   };
 
   return (
@@ -21,20 +24,29 @@ export const HeroSection = () => {
       <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-black to-black opacity-80 pointer-events-none"></div>
 
       <motion.div
-        initial="hidden"
+        initial={shouldReduceMotion ? "visible" : "hidden"}
         animate="visible"
-        style={{ y: yParallax, opacity: opacityParallax }}
+        style={{ 
+          y: shouldReduceMotion ? 0 : yParallax, 
+          opacity: shouldReduceMotion ? 1 : opacityParallax 
+        }}
         variants={{
           hidden: { opacity: 0 },
           visible: {
             opacity: 1,
-            transition: { staggerChildren: 0.2 },
+            transition: shouldReduceMotion ? { duration: 0 } : { staggerChildren: 0.2 },
           },
         }}
         className="z-10 relative flex max-w-4xl flex-col items-center justify-center gap-6 px-4 text-center"
       >
         <motion.div 
-          variants={{ hidden: { opacity: 0, scale: 0.5, filter: "blur(10px)" }, visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { type: "spring", stiffness: 100, damping: 20 } } }}
+          variants={shouldReduceMotion ? {
+            hidden: { opacity: 1 },
+            visible: { opacity: 1 }
+          } : { 
+            hidden: { opacity: 0, scale: 0.5, filter: "blur(10px)" }, 
+            visible: { opacity: 1, scale: 1, filter: "blur(0px)", transition: { type: "spring", stiffness: 100, damping: 20 } } 
+          }}
           className="relative mb-2"
         >
           <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-white/20 to-zinc-500/20 blur-xl"></div>

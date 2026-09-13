@@ -93,8 +93,9 @@ export const SplashCursor = () => {
         const yc = 0.5 * (trail[i].y + trail[i + 1].y);
         ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc);
         ctx.lineWidth = params.widthFactor * (params.pointsNumber - i);
-        // Create an energetic neon stroke effect that cycles colors
-        ctx.strokeStyle = `hsla(${(t / 10) % 360}, 100%, 70%, ${1 - i / params.pointsNumber})`;
+        // Soft aquatic stroke effect cycling between tide (195) and arcane (230)
+        const hue = 195 + ((t / 30) % 35);
+        ctx.strokeStyle = `hsla(${hue}, 80%, 50%, ${(1 - i / params.pointsNumber) * 0.35})`;
         ctx.stroke();
       }
       ctx.lineTo(trail[params.pointsNumber - 1].x, trail[params.pointsNumber - 1].y);
@@ -127,7 +128,7 @@ export const SplashCursor = () => {
     <canvas
       ref={canvasRef}
       className="pointer-events-none fixed inset-0 z-[9999]"
-      style={{ mixBlendMode: "screen" }}
+      style={{ mixBlendMode: "multiply" }}
     />
   );
 };

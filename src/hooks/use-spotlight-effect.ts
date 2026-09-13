@@ -27,7 +27,7 @@ export interface UseSpotlightEffectReturn {
 
 export function useSpotlightEffect(
   radius: number = 600,
-  color: string = "rgba(255,255,255,.1)"
+  color: string = "rgba(42, 168, 204, 0.12)"
 ): UseSpotlightEffectReturn {
   const divRef = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);

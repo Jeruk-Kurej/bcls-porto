@@ -42,11 +42,11 @@ export const MagneticButton = ({
         animate={{ x, y }}
         transition={{ type: "spring", stiffness: 300, damping: 20, mass: 0.5 }}
         className={cn(
-          "relative rounded-full px-8 py-3 text-sm font-medium tracking-wide text-white overflow-hidden bg-zinc-900 border border-zinc-800 transition-all hover:shadow-lg group",
+          "relative rounded-full px-8 py-3 text-sm font-medium tracking-wide text-[var(--color-depth)] overflow-hidden bg-white/80 border border-[var(--color-tide)]/30 transition-all hover:shadow-md group cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-tide-deep)]",
           className
         )}
       >
-        <span className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-emerald-500/20 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-in-out rounded-full"></span>
+        <span className="absolute inset-0 bg-gradient-to-r from-[var(--color-tide)]/20 to-[var(--color-foam)] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-in-out rounded-full"></span>
         <span className="relative z-10">{children}</span>
       </motion.button>
     </div>

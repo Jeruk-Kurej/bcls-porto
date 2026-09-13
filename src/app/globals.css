@@ -5,8 +5,17 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body);
+  --font-body: var(--font-body);
+  --font-display: var(--font-display);
+
+  --color-mist: #F3F9FB;
+  --color-foam: #E3F2F7;
+  --color-tide: #2AA8CC;
+  --color-tide-deep: #16748E;
+  --color-depth: #123952;
+  --color-arcane: #8B9EF2;
+  --color-ink: #33475A;
 
   --animate-meteor: meteor 5s linear infinite;
   --animate-spotlight: spotlight 2s ease .75s 1 forwards;
@@ -41,14 +50,31 @@
 }
 
 :root {
-  --background: #000000;
-  --foreground: #ededed;
+  --color-mist: #F3F9FB;
+  --color-foam: #E3F2F7;
+  --color-tide: #2AA8CC;
+  --color-tide-deep: #16748E;
+  --color-depth: #123952;
+  --color-arcane: #8B9EF2;
+  --color-ink: #33475A;
+
+  --background: var(--color-mist);
+  --foreground: var(--color-depth);
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  color: var(--color-ink);
+  font-family: var(--font-body), Inter, system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 36;
+  color: var(--color-depth);
+  letter-spacing: -0.02em;
 }
 
 html {
@@ -59,12 +85,12 @@ html {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #000;
+  background: var(--color-mist);
 }
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: #C4DDE7;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #9DC3D4;
 }

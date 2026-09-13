@@ -105,7 +105,7 @@ export const FloatingNav = () => {
       className="fixed top-6 left-1/2 -translate-x-1/2 z-[999]"
     >
       <nav
-        className="flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
+        className="flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[var(--color-foam)]/85 backdrop-blur-xl border border-[var(--color-tide)]/25 shadow-[0_8px_32px_rgba(18,57,82,0.08)]"
       >
         {navItems.map((item) => {
           const isActive = activeSection === item.href;
@@ -117,15 +117,15 @@ export const FloatingNav = () => {
               className={cn(
                 "relative px-3 py-1.5 text-xs sm:text-sm font-medium transition-colors duration-200 rounded-full",
                 isActive
-                  ? "text-white font-semibold"
-                  : "text-white/60 hover:text-white"
+                  ? "text-[var(--color-depth)] font-semibold"
+                  : "text-[var(--color-ink)]/75 hover:text-[var(--color-depth)]"
               )}
             >
               {isActive && (
                 <motion.span
                   layoutId="active-nav-indicator"
                   transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 30 }}
-                  className="absolute inset-0 rounded-full bg-white/15 border border-white/20 shadow-[0_0_12px_rgba(255,255,255,0.15)] -z-10"
+                  className="absolute inset-0 rounded-full bg-[var(--color-mist)] border border-[var(--color-tide)]/30 shadow-[0_2px_8px_rgba(18,57,82,0.08)] -z-10"
                 />
               )}
               {item.name}

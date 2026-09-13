@@ -3,28 +3,20 @@
 import { useSyncExternalStore } from "react";
 import { BentoGridItem } from "@/components/ui/bento-grid";
 import { Server } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Marquee } from "@/components/ui/marquee";
 import { GitHubCalendar } from "react-github-calendar";
 import { GithubIcon } from "@/components/ui/icons";
-import { fadeInUp, reducedFadeInUp, staggerContainer, cardFadeInUp } from "@/lib/motion";
+import { staggerContainer, cardFadeInUp } from "@/lib/motion";
 
 export const AboutSection = () => {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section id="capabilities" className="relative w-full bg-transparent py-20 px-4 md:px-8">
       <div className="mx-auto max-w-5xl">
-        <motion.div
-          variants={shouldReduceMotion ? reducedFadeInUp : fadeInUp}
-          initial={shouldReduceMotion ? "visible" : "hidden"}
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mb-12 flex flex-col items-center justify-center text-center"
-        >
-          <h2 className="text-3xl font-bold text-white sm:text-4xl">Technical Profile</h2>
-          <div className="mt-2 h-1 w-20 rounded bg-zinc-800" />
-        </motion.div>
+        <div className="mb-12 flex flex-col items-center justify-center text-center">
+          <h2 className="text-3xl font-display font-bold text-[var(--color-depth)] sm:text-4xl">Technical Profile</h2>
+          <div className="mt-3 h-1 w-20 rounded-full bg-[var(--color-tide)]/40" />
+        </div>
 
         <motion.div
           initial="hidden"
@@ -70,8 +62,8 @@ const techStack = [
 ];
 
 const githubTheme = {
-  light: ['#18181b', '#064e3b', '#047857', '#10b981', '#34d399'],
-  dark: ['#18181b', '#064e3b', '#047857', '#10b981', '#34d399'],
+  light: ['#E3F2F7', '#86d0e3', '#4fb8d8', '#2AA8CC', '#16748E'],
+  dark: ['#E3F2F7', '#86d0e3', '#4fb8d8', '#2AA8CC', '#16748E'],
 };
 
 const emptySubscribe = () => () => {};
@@ -79,7 +71,7 @@ const emptySubscribe = () => () => {};
 const GithubCalendarComponent = () => {
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
   
-  if (!mounted) return <div className="h-[120px] w-full animate-pulse bg-zinc-800/20 rounded-lg"></div>;
+  if (!mounted) return <div className="h-[120px] w-full animate-pulse bg-[var(--color-foam)] rounded-lg"></div>;
   
   return (
     <GitHubCalendar
@@ -90,7 +82,7 @@ const GithubCalendarComponent = () => {
       showTotalCount={false}
       blockSize={12}
       blockMargin={4}
-      colorScheme="dark"
+      colorScheme="light"
     />
   );
 };
@@ -100,20 +92,20 @@ const items = [
     title: "Code Activity",
     description: "My latest open-source contributions across the ecosystem.",
     header: (
-      <div className="relative flex flex-1 w-full h-full min-h-[12rem] rounded-xl overflow-hidden bg-zinc-900/20 items-center justify-center p-4">
+      <div className="relative flex flex-1 w-full h-full min-h-[12rem] rounded-xl overflow-hidden bg-white/60 items-center justify-center p-4 border border-[var(--color-tide)]/15">
         <GithubCalendarComponent />
       </div>
     ),
-    icon: <GithubIcon className="h-4 w-4 text-neutral-500" />,
+    icon: <GithubIcon className="h-4 w-4 text-[var(--color-tide-deep)]" />,
     className: "md:col-span-1",
   },
   {
     title: "My Development Toolkit",
     description: "Continuously mastering modern languages and frameworks.",
     header: (
-      <div className="relative flex flex-1 w-full flex-col h-full min-h-[12rem] rounded-xl overflow-hidden bg-purple-900/10 items-center justify-center gap-4">
-        <div className="absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none"></div>
+      <div className="relative flex flex-1 w-full flex-col h-full min-h-[12rem] rounded-xl overflow-hidden bg-[var(--color-mist)] items-center justify-center gap-4 border border-[var(--color-tide)]/15">
+        <div className="absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-[var(--color-mist)] to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-1/5 bg-gradient-to-l from-[var(--color-mist)] to-transparent z-10 pointer-events-none"></div>
         
         <Marquee className="w-full" pauseOnHover>
           {techStack.slice(0, Math.ceil(techStack.length / 2)).map((tech, idx) => (
@@ -122,9 +114,9 @@ const items = [
               href={tech.url}
               target="_blank"
               rel="noreferrer"
-              whileHover={{ y: -5, scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="inline-block z-20 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium text-white border border-white/10 hover:border-white/20 transition-colors whitespace-nowrap cursor-pointer mx-2"
+              whileHover={{ y: -3, scale: 1.04 }}
+              transition={{ type: "spring", stiffness: 400, damping: 12 }}
+              className="inline-block z-20 px-3.5 py-1.5 bg-white/80 hover:bg-white rounded-full text-xs sm:text-sm font-medium text-[var(--color-depth)] border border-[var(--color-tide)]/30 hover:border-[var(--color-tide)] transition-all shadow-xs whitespace-nowrap cursor-pointer mx-1.5"
             >
               {tech.name}
             </motion.a>
@@ -138,9 +130,9 @@ const items = [
               href={tech.url}
               target="_blank"
               rel="noreferrer"
-              whileHover={{ y: -5, scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
-              className="inline-block z-20 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-full text-sm font-medium text-white border border-white/10 hover:border-white/20 transition-colors whitespace-nowrap cursor-pointer mx-2"
+              whileHover={{ y: -3, scale: 1.04 }}
+              transition={{ type: "spring", stiffness: 400, damping: 12 }}
+              className="inline-block z-20 px-3.5 py-1.5 bg-white/80 hover:bg-white rounded-full text-xs sm:text-sm font-medium text-[var(--color-depth)] border border-[var(--color-tide)]/30 hover:border-[var(--color-tide)] transition-all shadow-xs whitespace-nowrap cursor-pointer mx-1.5"
             >
               {tech.name}
             </motion.a>
@@ -148,7 +140,7 @@ const items = [
         </Marquee>
       </div>
     ),
-    icon: <Server className="h-4 w-4 text-neutral-500" />,
+    icon: <Server className="h-4 w-4 text-[var(--color-tide-deep)]" />,
     className: "md:col-span-1",
   },
 ];

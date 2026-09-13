@@ -2,19 +2,14 @@
 
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { ArrowDown, Mail } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, Mail } from "lucide-react";
 
 export const HeroSection = () => {
   const shouldReduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 500], [0, 80]);
   const opacityParallax = useTransform(scrollY, [0, 700], [1, 0]);
-
-  const handleScrollWork = () => {
-    document.getElementById("projects")?.scrollIntoView({ 
-      behavior: shouldReduceMotion ? "auto" : "smooth" 
-    });
-  };
 
   const handleScrollContact = () => {
     document.getElementById("contact")?.scrollIntoView({ 
@@ -85,14 +80,13 @@ export const HeroSection = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-wrap items-center gap-4"
           >
-            <button
-              type="button"
-              onClick={handleScrollWork}
+            <Link
+              href="/work"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[var(--color-tide-deep)] text-white text-sm font-semibold hover:opacity-95 hover:scale-102 active:scale-98 transition-all shadow-md cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-tide-deep)] focus-visible:ring-offset-2"
             >
               <span>View my work</span>
-              <ArrowDown className="w-4 h-4" />
-            </button>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
 
             <button
               type="button"

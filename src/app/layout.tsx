@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Fraunces, Inter } from "next/font/google";
+import { FloatingNav } from "@/components/ui/floating-nav";
+import { SplashCursor } from "@/components/ui/cursor";
+import { Particles } from "@/components/ui/particles";
+import { FooterSection } from "@/components/sections/footer";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -56,7 +60,15 @@ export default function RootLayout({
       lang="en"
       className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-[var(--color-mist)] text-[var(--color-ink)] selection:bg-[var(--color-foam)] selection:text-[var(--color-depth)]">{children}</body>
+      <body className="min-h-full flex flex-col font-sans bg-[var(--color-mist)] text-[var(--color-ink)] selection:bg-[var(--color-foam)] selection:text-[var(--color-depth)]">
+        <SplashCursor />
+        <FloatingNav />
+        <Particles quantity={45} className="fixed inset-0 z-0 opacity-40 pointer-events-none" />
+        <main className="relative flex min-h-screen flex-col flex-1 z-10">
+          {children}
+        </main>
+        <FooterSection />
+      </body>
     </html>
   );
 }

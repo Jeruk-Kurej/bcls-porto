@@ -4,10 +4,13 @@ export type ProjectFeature = {
   icon?: string;
 };
 
+export type ProjectPlatform = "Web" | "iOS" | "Android";
+
 export type Project = {
   id: string;
   title: string;
   subtitle: string;
+  platform: ProjectPlatform;
   about: string;
   problem: string;
   solution: string;
@@ -23,6 +26,7 @@ export const projectsData: Project[] = [
     id: "uc-online-learning",
     title: "UC Online Learning",
     subtitle: "Student & Alumni Business Directory",
+    platform: "Web",
     about: "A comprehensive academic and business directory platform built for Universitas Ciputra Online. This platform bridges the gap between student/alumni entrepreneurs and potential clients or collaborators by showcasing their business profiles, achievements, and service catalogs.",
     problem: "Students and alumni entrepreneurs often lack a unified, university-backed platform to professionally showcase their portfolios and services to the wider academic and business community.",
     solution: "Developed a robust directory ecosystem with AI moderation to ensure content quality and a seamless onboarding system to handle mass data imports efficiently.",
@@ -41,6 +45,7 @@ export const projectsData: Project[] = [
     id: "gki-darmo-permai",
     title: "GKI Darmo Permai",
     subtitle: "Community Portal & Management System",
+    platform: "Web",
     about: "An interactive and highly secure community portal developed for GKI Darmo Permai. The platform serves as a centralized digital hub for congregation members to access worship schedules, digital bulletins, and multimedia content.",
     problem: "The church relied heavily on physical paper bulletins and fragmented communication channels for scheduling, leading to inefficiencies and reduced engagement.",
     solution: "Engineered a centralized digital portal to digitalize the weekly bulletin, integrate video streaming, and provide a secure management interface for church committees.",
@@ -59,6 +64,7 @@ export const projectsData: Project[] = [
     id: "yukdebat",
     title: "YukDebat",
     subtitle: "iOS Platform for the Debate Community",
+    platform: "iOS",
     about: "YukDebat is an innovative iOS platform tailored for the competitive debate community. It serves as a centralized hub for debaters, adjudicators, and competition promoters to interact, practice, and evaluate debate motions.",
     problem: "Finding quality debate sparring partners, getting constructive feedback from certified adjudicators, and tracking debate competition schedules are often scattered across different social media groups.",
     solution: "YukDebat bridges this gap by offering a dedicated sparring lobby, an AI-powered motion generator, and a peer-review system where debaters can publish their case-building notes to be evaluated by verified adjudicators.",
@@ -76,6 +82,7 @@ export const projectsData: Project[] = [
     id: "dagify",
     title: "Dagify",
     subtitle: "Apple Ecosystem CRM & Business Tracker",
+    platform: "iOS",
     about: "Dagify is a CRM and business management suite built natively for the Apple Ecosystem (macOS/iPadOS/iOS). It integrates deeply with Cloud infrastructure to provide business owners with a premium, synchronized overview of their operations.",
     problem: "Business owners using Apple devices often lack a native, high-performance CRM tool that synchronizes seamlessly across their Mac, iPad, and iPhone for tracking cash flow and loyal customers.",
     solution: "I built Dagify utilizing modern SwiftUI and Firebase to provide a seamless, native Apple experience. It centralizes customer data, tracks spending habits, and leverages SwiftData for high-speed local caching.",
@@ -91,6 +98,7 @@ export const projectsData: Project[] = [
     id: "sumo",
     title: "Sum-O",
     subtitle: "Android POS Ecosystem",
+    platform: "Android",
     about: "Sum-O is a comprehensive Android-native Point of Sale (POS) solution designed to empower small to medium businesses. It provides real-time business analytics, seamless offline-to-online synchronization, and robust multi-tenant data isolation.",
     problem: "Many small to medium businesses struggle with network instability paralyzing their cloud-dependent POS systems, causing major disruptions during cashier duties and inventory tracking.",
     solution: "I engineered an offline-first architecture for Sum-O, allowing transactions to be saved locally when the connection drops and synced seamlessly later. It includes strict user-data isolation for secure multi-branch operations.",
@@ -107,6 +115,7 @@ export const projectsData: Project[] = [
     id: "fixit",
     title: "FixIt",
     subtitle: "On-Demand Maintenance Service Marketplace",
+    platform: "Web",
     about: "An on-demand service marketplace connecting customers with verified technicians for appliance repairs and maintenance. FixIt streamlines the entire service lifecycle from diagnostics to scheduling and secure payments.",
     problem: "Customers face difficulties in finding reliable technicians, getting transparent pricing upfront, and tracking their repair progress efficiently.",
     solution: "Created a centralized marketplace with a guided, multi-step booking process, real-time chat, and dedicated dashboards for all user roles to ensure a transparent service lifecycle.",
@@ -121,3 +130,13 @@ export const projectsData: Project[] = [
     liveUrl: "https://fix-it-project.vercel.app"
   }
 ];
+
+const platformOrder: ProjectPlatform[] = ["Web", "iOS", "Android"];
+
+/** e.g. "6 projects: 3 web, 2 iOS, 1 Android" */
+export const projectSummary = `${projectsData.length} projects: ${platformOrder
+  .map((platform) => {
+    const count = projectsData.filter((project) => project.platform === platform).length;
+    return `${count} ${platform === "Web" ? "web" : platform}`;
+  })
+  .join(", ")}`;

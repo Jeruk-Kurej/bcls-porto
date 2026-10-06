@@ -1,9 +1,7 @@
-"use client";
-
 import { Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, WhatsappIcon } from "@/components/ui/icons";
+import { Waterline } from "@/components/ui/waterline";
 import { contactData, type ContactIconKey } from "@/data/contact";
-import { cn } from "@/lib/utils";
 
 const iconMap: Record<ContactIconKey, React.ComponentType<{ className?: string }>> = {
   github: GithubIcon,
@@ -13,29 +11,51 @@ const iconMap: Record<ContactIconKey, React.ComponentType<{ className?: string }
 };
 
 export const FooterSection = () => {
+  // Email gets its own large link, so the row below lists the other channels
+  const otherLinks = contactData.links.filter((link) => link.icon !== "email");
+
   return (
-    <footer id="contact" className="w-full relative z-10 py-12 mt-20 border-t border-[var(--color-tide)]/25 bg-[var(--color-foam)]/60 backdrop-blur-sm">
-      <div className="mx-auto max-w-5xl px-4 md:px-8 flex flex-col items-center justify-center gap-6">
-        <h3 className="text-xl font-display font-bold text-[var(--color-depth)]">Let&apos;s Connect</h3>
-        <div className="flex flex-wrap justify-center items-center gap-8">
-          {contactData.links.map((link) => {
+    <footer id="contact" className="relative mt-24 bg-depth text-foam md:mt-32">
+      <Waterline />
+
+      <div className="wrap pt-16 pb-10 md:pt-24">
+        <h2 className="display-lg text-white">Let&apos;s connect</h2>
+        <p className="mt-6 max-w-[44ch] text-lg text-foam/90">
+          I&apos;m open to full-stack and native mobile roles. Email is the fastest way to reach me.
+        </p>
+
+        <p className="mt-8">
+          <a
+            href={`mailto:${contactData.email}`}
+            className="font-display text-2xl break-words text-white underline decoration-tide decoration-1 underline-offset-[0.3em] transition-colors hover:decoration-white sm:text-4xl"
+          >
+            {contactData.email}
+          </a>
+        </p>
+
+        <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-4 text-[0.9375rem]">
+          {otherLinks.map((link) => {
             const Icon = iconMap[link.icon];
             return (
-              <a
-                key={link.id}
-                href={link.href}
-                target={link.isExternal ? "_blank" : undefined}
-                rel={link.isExternal ? "noreferrer" : undefined}
-                className={cn("flex items-center gap-2 text-[var(--color-ink)] hover:text-[var(--color-tide-deep)] transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-[var(--color-tide-deep)] rounded-sm", link.hoverClass)}
-                aria-label={link.isExternal ? `${link.label} (opens in new tab)` : link.label}
-              >
-                <Icon className="h-5 w-5 text-[var(--color-tide-deep)]" />
-                <span className="text-sm font-medium">{link.label}</span>
-              </a>
+              <li key={link.id}>
+                <a
+                  href={link.href}
+                  target={link.isExternal ? "_blank" : undefined}
+                  rel={link.isExternal ? "noreferrer" : undefined}
+                  className="inline-flex items-center gap-2 transition-colors hover:text-white"
+                >
+                  <Icon className="size-[1.125rem]" />
+                  {link.label}
+                  {link.isExternal && <span className="sr-only"> (opens in new tab)</span>}
+                </a>
+              </li>
             );
           })}
-        </div>
-        <p className="text-[var(--color-ink)]/70 text-xs mt-2">© {new Date().getFullYear()} {contactData.name}. All rights reserved.</p>
+        </ul>
+
+        <p className="mt-16 text-sm text-foam/65">
+          © {new Date().getFullYear()} {contactData.name}
+        </p>
       </div>
     </footer>
   );

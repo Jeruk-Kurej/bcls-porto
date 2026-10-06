@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
-import { FloatingNav } from "@/components/ui/floating-nav";
-import { SplashCursor } from "@/components/ui/cursor";
-
+import { Fraunces, Instrument_Sans } from "next/font/google";
+import { SiteHeader } from "@/components/ui/site-header";
 import { FooterSection } from "@/components/sections/footer";
 import "./globals.css";
 
 const fraunces = Fraunces({
-  variable: "--font-display",
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  axes: ["opsz"],
+  axes: ["opsz", "SOFT"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-body",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
   display: "swap",
 });
@@ -58,13 +56,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${instrumentSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-[var(--color-mist)] text-[var(--color-ink)] selection:bg-[var(--color-foam)] selection:text-[var(--color-depth)]">
-        <SplashCursor />
-        <FloatingNav />
+      <body className="min-h-full flex flex-col font-sans">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-depth focus:px-4 focus:py-2 focus:text-sm focus:text-white"
+        >
+          Skip to content
+        </a>
+        <SiteHeader />
 
-        <main className="relative flex min-h-screen flex-col flex-1 z-10">
+        <main id="main" className="flex-1">
           {children}
         </main>
         <FooterSection />

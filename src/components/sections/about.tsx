@@ -1,146 +1,42 @@
-"use client";
+import { Section } from "@/components/ui/section";
 
-import { useSyncExternalStore } from "react";
-import { BentoGridItem } from "@/components/ui/bento-grid";
-import { Server } from "lucide-react";
-import { motion } from "framer-motion";
-import { Marquee } from "@/components/ui/marquee";
-import { GitHubCalendar } from "react-github-calendar";
-import { GithubIcon } from "@/components/ui/icons";
-import { staggerContainer, cardFadeInUp } from "@/lib/motion";
-import { SectionHeader } from "@/components/ui";
+const toolkit = [
+  { area: "Mobile", tools: ["Swift", "SwiftUI", "Kotlin", "Jetpack Compose"] },
+  { area: "Web", tools: ["Next.js", "React", "Laravel"] },
+  { area: "Data and services", tools: ["MySQL", "PostgreSQL", "Firebase", "Prisma", "Cloudinary"] },
+];
 
 export const AboutSection = () => {
   return (
-    <section id="capabilities" className="relative w-full bg-transparent py-20 px-4 md:px-8">
-      <div className="mx-auto max-w-5xl">
-        <SectionHeader title="Technical Profile" className="mb-12" />
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
-          variants={staggerContainer}
-          className="grid md:auto-rows-[22rem] grid-cols-1 md:grid-cols-2 gap-8"
-        >
-          {items.map((item, i) => (
-            <motion.div
-              key={i}
-              className={item.className}
-              variants={cardFadeInUp}
-            >
-              <BentoGridItem
-                title={item.title}
-                description={item.description}
-                header={item.header}
-                icon={item.icon}
-                className="h-full"
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+    <Section id="about" title="About">
+      <div className="max-w-[62ch] space-y-5 text-lg">
+        <p>
+          I like connecting solid backend systems to clean, intuitive interfaces. While studying
+          Informatics, I&apos;ve built native apps in Swift and Kotlin and full-stack web
+          applications with Laravel, Next.js, and React, which lets me follow a product from the
+          database to the screen.
+        </p>
+        <p>
+          I&apos;ve also coordinated events and led design teams in campus organisations. That
+          taught me the best digital products come from clear communication as much as from clean
+          code.
+        </p>
       </div>
-    </section>
+
+      <dl className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-3">
+        {toolkit.map((group) => (
+          <div key={group.area}>
+            <dt className="font-medium text-depth">{group.area}</dt>
+            <dd className="mt-2 text-[0.9375rem]">
+              <ul className="space-y-1">
+                {group.tools.map((tool) => (
+                  <li key={tool}>{tool}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Section>
   );
 };
-
-const techStack = [
-  { name: "Swift", url: "https://developer.apple.com/swift/" },
-  { name: "Kotlin", url: "https://kotlinlang.org/" },
-  { name: "NextJS", url: "https://nextjs.org/" },
-  { name: "Laravel", url: "https://laravel.com/" },
-  { name: "React", url: "https://react.dev/" },
-  { name: "SwiftUI", url: "https://developer.apple.com/xcode/swiftui/" },
-  { name: "Jetpack Compose", url: "https://developer.android.com/compose" },
-  { name: "MySQL", url: "https://www.mysql.com/" },
-  { name: "PostgreSQL", url: "https://www.postgresql.org/" },
-  { name: "Firebase", url: "https://firebase.google.com/" },
-  { name: "Cloudinary", url: "https://cloudinary.com/" },
-  { name: "Prisma", url: "https://www.prisma.io/" }
-];
-
-const githubTheme = {
-  light: ['#E3F2F7', '#86d0e3', '#4fb8d8', '#2AA8CC', '#16748E'],
-  dark: ['#E3F2F7', '#86d0e3', '#4fb8d8', '#2AA8CC', '#16748E'],
-};
-
-const emptySubscribe = () => () => {};
-
-const GithubCalendarComponent = () => {
-  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
-  
-  if (!mounted) return <div className="h-[120px] w-full animate-pulse bg-[var(--color-foam)] rounded-lg"></div>;
-  
-  return (
-    <GitHubCalendar
-      username="Jeruk-Kurej"
-      theme={githubTheme}
-      showColorLegend={false}
-      showMonthLabels={false}
-      showTotalCount={false}
-      blockSize={12}
-      blockMargin={4}
-      colorScheme="light"
-    />
-  );
-};
-
-const items = [
-  {
-    title: "Code Activity",
-    description: "My latest open-source contributions across the ecosystem.",
-    header: (
-      <div className="relative flex flex-1 w-full h-full min-h-[12rem] rounded-xl overflow-hidden bg-white/60 items-center justify-center p-4 border border-[var(--color-tide)]/15">
-        <GithubCalendarComponent />
-      </div>
-    ),
-    icon: <GithubIcon className="h-4 w-4 text-[var(--color-tide-deep)]" />,
-    className: "md:col-span-1",
-  },
-  {
-    title: "My Development Toolkit",
-    description: "Continuously mastering modern languages and frameworks.",
-    header: (
-      <div className="relative flex flex-1 w-full flex-col h-full min-h-[12rem] rounded-xl overflow-hidden bg-[var(--color-mist)] items-center justify-center gap-4 border border-[var(--color-tide)]/15">
-        <div className="absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-[var(--color-mist)] to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-1/5 bg-gradient-to-l from-[var(--color-mist)] to-transparent z-10 pointer-events-none"></div>
-        
-        <Marquee className="w-full" pauseOnHover>
-          {techStack.slice(0, Math.ceil(techStack.length / 2)).map((tech, idx) => (
-            <motion.a
-              key={idx}
-              href={tech.url}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ y: -3, scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 400, damping: 12 }}
-              className="inline-block z-20 px-3.5 py-1.5 bg-white/80 hover:bg-white rounded-full text-xs sm:text-sm font-medium text-[var(--color-depth)] border border-[var(--color-tide)]/30 hover:border-[var(--color-tide)] transition-all shadow-xs whitespace-nowrap cursor-pointer mx-1.5"
-            >
-              {tech.name}
-              <span className="sr-only"> (opens in new tab)</span>
-            </motion.a>
-          ))}
-        </Marquee>
-
-        <Marquee className="w-full" pauseOnHover reverse>
-          {techStack.slice(Math.ceil(techStack.length / 2)).map((tech, idx) => (
-            <motion.a
-              key={idx}
-              href={tech.url}
-              target="_blank"
-              rel="noreferrer"
-              whileHover={{ y: -3, scale: 1.04 }}
-              transition={{ type: "spring", stiffness: 400, damping: 12 }}
-              className="inline-block z-20 px-3.5 py-1.5 bg-white/80 hover:bg-white rounded-full text-xs sm:text-sm font-medium text-[var(--color-depth)] border border-[var(--color-tide)]/30 hover:border-[var(--color-tide)] transition-all shadow-xs whitespace-nowrap cursor-pointer mx-1.5"
-            >
-              {tech.name}
-              <span className="sr-only"> (opens in new tab)</span>
-            </motion.a>
-          ))}
-        </Marquee>
-      </div>
-    ),
-    icon: <Server className="h-4 w-4 text-[var(--color-tide-deep)]" />,
-    className: "md:col-span-1",
-  },
-];

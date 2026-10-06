@@ -7,7 +7,6 @@ export interface ContactLink {
   icon: ContactIconKey;
   value?: string;
   isExternal?: boolean;
-  hoverClass?: string;
 }
 
 export interface ContactInfo {
@@ -32,7 +31,6 @@ export const contactData: ContactInfo = {
       href: "https://github.com/Jeruk-Kurej",
       icon: "github",
       isExternal: true,
-      hoverClass: "hover:text-[var(--color-depth)]",
     },
     {
       id: "linkedin",
@@ -40,7 +38,6 @@ export const contactData: ContactInfo = {
       href: "https://www.linkedin.com/in/bcls",
       icon: "linkedin",
       isExternal: true,
-      hoverClass: "hover:text-[var(--color-depth)]",
     },
     {
       id: "email",
@@ -49,7 +46,6 @@ export const contactData: ContactInfo = {
       value: "blukitosetiawan@gmail.com",
       icon: "email",
       isExternal: false,
-      hoverClass: "hover:text-[var(--color-depth)]",
     },
     {
       id: "whatsapp",
@@ -58,7 +54,6 @@ export const contactData: ContactInfo = {
       value: "6281234881603",
       icon: "whatsapp",
       isExternal: true,
-      hoverClass: "hover:text-green-400",
     },
   ],
 };

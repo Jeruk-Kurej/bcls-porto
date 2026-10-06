@@ -1,8 +1,4 @@
 import { 
-  Laptop, 
-  Smartphone, 
-  Layers, 
-  Layout, 
   Shield, 
   Cloud, 
   BrainCircuit,
@@ -58,9 +54,4 @@ export const featureIconMap: Record<string, LucideIcon> = {
 export const getFeatureIcon = (name?: string): LucideIcon => {
   if (!name || !featureIconMap[name]) return Sparkles;
   return featureIconMap[name];
-};
-
-export const getProjectFallbackIcon = (index: number): LucideIcon => {
-  const icons: LucideIcon[] = [Laptop, Layers, Layout, Smartphone, Smartphone, Shield];
-  return icons[index % icons.length];
 };

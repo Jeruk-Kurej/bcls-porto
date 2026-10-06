@@ -37,7 +37,7 @@ export const contactData: ContactInfo = {
     {
       id: "linkedin",
       label: "LinkedIn",
-      href: "https://www.linkedin.com/in/bryan-carlie-lukito-setiawan/",
+      href: "https://www.linkedin.com/in/bcls",
       icon: "linkedin",
       isExternal: true,
       hoverClass: "hover:text-[var(--color-depth)]",
@@ -45,8 +45,8 @@ export const contactData: ContactInfo = {
     {
       id: "email",
       label: "Email",
-      href: "mailto:bryancarlie@gmail.com",
-      value: "bryancarlie@gmail.com",
+      href: "mailto:blukitosetiawan@gmail.com",
+      value: "blukitosetiawan@gmail.com",
       icon: "email",
       isExternal: false,
       hoverClass: "hover:text-[var(--color-depth)]",

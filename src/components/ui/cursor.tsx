@@ -1,134 +1,38 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore } from "react";
-import { useReducedMotion } from "framer-motion";
-
-const subscribePointer = (callback: () => void) => {
-  if (typeof window === "undefined") return () => {};
-  const mql = window.matchMedia("(pointer: fine)");
-  mql.addEventListener("change", callback);
-  return () => mql.removeEventListener("change", callback);
-};
-
-const getPointerSnapshot = () => {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(pointer: fine)").matches;
-};
-
-const getPointerServerSnapshot = () => false;
+import { useCallback, useRef, useEffect } from "react";
+import { useReducedMotionState } from "@/lib";
 
 export const SplashCursor = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const shouldReduceMotion = useReducedMotion();
-  const hasPointer = useSyncExternalStore(
-    subscribePointer,
-    getPointerSnapshot,
-    getPointerServerSnapshot
+  const { enabled } = useReducedMotionState();
+  const shouldReduceMotion = !enabled;
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Click-triggered ripple ring
+  const spawnRipple = useCallback(
+    (e: PointerEvent) => {
+      if (!containerRef.current || shouldReduceMotion) return;
+
+      const ring = document.createElement("div");
+      ring.className = "cursor-ripple-ring";
+      ring.style.left = `${e.clientX}px`;
+      ring.style.top = `${e.clientY}px`;
+
+      containerRef.current.appendChild(ring);
+      ring.addEventListener("animationend", () => ring.remove());
+    },
+    [shouldReduceMotion]
   );
 
   useEffect(() => {
-    if (!hasPointer || shouldReduceMotion) return;
+    if (shouldReduceMotion) return;
+    window.addEventListener("pointerdown", spawnRipple);
+    return () => window.removeEventListener("pointerdown", spawnRipple);
+  }, [shouldReduceMotion, spawnRipple]);
 
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let width = window.innerWidth;
-    let height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    const pointer = { x: width / 2, y: height / 2 };
-    const params = {
-      pointsNumber: 40,
-      widthFactor: 0.3,
-      mouseThreshold: 0.6,
-      spring: 0.4,
-      friction: 0.5,
-    };
-
-    const trail = new Array(params.pointsNumber).fill(null).map(() => ({
-      x: pointer.x,
-      y: pointer.y,
-      dx: 0,
-      dy: 0,
-    }));
-
-    const updateMousePosition = (e: MouseEvent) => {
-      pointer.x = e.clientX;
-      pointer.y = e.clientY;
-    };
-
-    window.addEventListener("mousemove", updateMousePosition);
-
-    let animationFrameId: number;
-
-    const update = (t: number) => {
-      ctx.clearRect(0, 0, width, height);
-
-      trail[0].x = pointer.x;
-      trail[0].y = pointer.y;
-
-      for (let i = 1; i < params.pointsNumber; i++) {
-        const dx = trail[i - 1].x - trail[i].x;
-        const dy = trail[i - 1].y - trail[i].y;
-
-        trail[i].dx += dx * params.spring;
-        trail[i].dy += dy * params.spring;
-        trail[i].dx *= params.friction;
-        trail[i].dy *= params.friction;
-
-        trail[i].x += trail[i].dx;
-        trail[i].y += trail[i].dy;
-      }
-
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(trail[0].x, trail[0].y);
-
-      for (let i = 1; i < params.pointsNumber - 1; i++) {
-        const xc = 0.5 * (trail[i].x + trail[i + 1].x);
-        const yc = 0.5 * (trail[i].y + trail[i + 1].y);
-        ctx.quadraticCurveTo(trail[i].x, trail[i].y, xc, yc);
-        ctx.lineWidth = params.widthFactor * (params.pointsNumber - i);
-        // Soft aquatic stroke effect cycling between tide (195) and arcane (230)
-        const hue = 195 + ((t / 30) % 35);
-        ctx.strokeStyle = `hsla(${hue}, 80%, 50%, ${(1 - i / params.pointsNumber) * 0.35})`;
-        ctx.stroke();
-      }
-      ctx.lineTo(trail[params.pointsNumber - 1].x, trail[params.pointsNumber - 1].y);
-      ctx.stroke();
-
-      animationFrameId = requestAnimationFrame(update);
-    };
-
-    animationFrameId = requestAnimationFrame(update);
-
-    const resize = () => {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-    };
-
-    window.addEventListener("resize", resize);
-
-    return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [hasPointer, shouldReduceMotion]);
-
-  if (!hasPointer || shouldReduceMotion) return null;
+  if (shouldReduceMotion) return null;
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="pointer-events-none fixed inset-0 z-[9999]"
-      style={{ mixBlendMode: "multiply" }}
-    />
+    <div ref={containerRef} className="pointer-events-none fixed inset-0 z-[9999]" aria-hidden="true" />
   );
 };

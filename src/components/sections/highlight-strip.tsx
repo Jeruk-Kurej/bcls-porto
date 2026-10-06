@@ -1,12 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { 
-  FolderGit2, 
-  Award, 
-  Layers, 
-  Users 
+import { motion } from "framer-motion";
+import {
+  FolderGit2,
+  Award,
+  Layers,
+  Users
 } from "lucide-react";
+
+import { useReducedMotionState } from "@/lib";
 
 interface HighlightItem {
   icon: React.ComponentType<{ className?: string }>;
@@ -38,7 +40,8 @@ const highlights: HighlightItem[] = [
 ];
 
 export const HighlightStrip = () => {
-  const shouldReduceMotion = useReducedMotion();
+  const { enabled } = useReducedMotionState();
+  const shouldReduceMotion = !enabled;
 
   return (
     <div className="w-full py-6 px-4 md:px-8 border-y border-[var(--color-tide)]/20 bg-[var(--color-foam)]/45 backdrop-blur-xs relative z-10">

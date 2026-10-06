@@ -32,10 +32,10 @@ const CategoryBadge = ({ category }: { category: ExperienceCategory }) => {
 
 export const ExperienceTeaser = () => {
   // Curate 3 standout entries across distinct domains:
-  // 1. Current Full-Stack role (uco-intern)
-  // 2. High-visibility Leadership (gdg-coord)
+  // 1. Current internship with the Laravel showcase project (uco-intern)
+  // 2. Ongoing teaching roles across four courses (student-assistant)
   // 3. Prestigious intensive iOS foundation (apple-foundation)
-  const teaserIds = ["uco-intern", "gdg-coord", "apple-foundation"];
+  const teaserIds = ["uco-intern", "student-assistant", "apple-foundation"];
   const teaserItems = experienceData.filter((item) => teaserIds.includes(item.id));
 
   return (
@@ -66,7 +66,7 @@ export const ExperienceTeaser = () => {
           {teaserItems.map((item) => (
             <div
               key={item.id}
-              className="p-6 sm:p-7 rounded-2xl bg-[var(--color-foam)]/70 backdrop-blur-md border border-[var(--color-tide)]/25 shadow-xs hover:shadow-md transition-all"
+              className="p-6 sm:p-7 rounded-2xl bg-[var(--color-foam)] border border-[var(--color-tide)]/25 shadow-xs hover:shadow-md transition-all"
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                 <div>

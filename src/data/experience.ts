@@ -13,105 +13,84 @@ export const experienceData: ExperienceItem[] = [
   {
     id: "uco-intern",
     title: "Universitas Ciputra Online Learning",
-    role: "Full-Stack Developer & Intern",
-    date: "June 2025 - Present",
+    role: "Intern",
+    date: "December 2025 - Present",
     category: "Work",
     points: [
-      "Managed daily Zoom class operations by handling host duties, recording sessions, and ensuring smooth screen sharing for lecturers and students.",
-      "Partnered with a teammate to engineer a student business showcase platform using Laravel and MySQL, managing the full development lifecycle.",
-      "Provided technical support for university seminars and events, including the 2025 MEM Inauguration Night.",
-      "Facilitated outreach programs at SMK Harapan Sejati by supporting the technical delivery of entrepreneurship workshops."
+      "Partnered with a teammate to design and build a student business showcase website using Laravel and MySQL, giving students a platform to publish professional profiles and testimonials.",
+      "Manage daily virtual class operations by hosting Zoom sessions, recording lectures, and overseeing the technical flow for lecturers and students.",
+      "Provide technical support for university seminars and events, including the 2025 MEM Inauguration Night, handling presentation media, video playback, and live production transitions.",
+      "Facilitate outreach programs such as entrepreneurship workshops at SMK Harapan Sejati by managing technical delivery and media content."
+    ]
+  },
+  {
+    id: "student-assistant",
+    title: "Universitas Ciputra Surabaya",
+    role: "Student Assistant",
+    date: "September 2025 - Present",
+    category: "Work",
+    points: [
+      "Web Development (Sep 2026 - Present): mentor students from object-oriented PHP through the Laravel framework, database migrations, and final deployment, while drafting practice tests and managing the course e-learning platform.",
+      "Basic Programming (Sep 2026 - Present): assist first-year students during Java lab sessions and grade weekly laboratory pre-tests with personalized technical feedback.",
+      "Advanced Programming (Feb 2026 - Jun 2026): assessed weekly Java lab assignments against technical rubrics, verifying correct use of encapsulation, inheritance, polymorphism, and abstraction.",
+      "Computer Organization & Architecture (Sep 2025 - Jan 2026): prepared lecture content, drafted exam questions on system architecture and hardware-software interaction, and managed grading."
     ]
   },
   {
     id: "intern-hustle-coord",
     title: "Intern Hustle 2026",
-    role: "Event Division Coordinator",
-    date: "December 2025 - Present",
+    role: "Event Coordinator",
+    date: "December 2025 - August 2026",
     category: "Leadership",
     points: [
-      "Co-led the Event Division for Intern Hustle 2026 by managing a team to execute comprehensive career development programs, including seminars, workshops, and internship placements.",
-      "Partnered with a fellow coordinator to delegate administrative and logistical tasks, drafting Terms of Reference (ToR) and detailed event rundowns.",
-      "Mentored team members through the operational planning process, ensuring all logistical requirements were met to deliver a seamless experience."
+      "Co-led the Event Division, overseeing the planning and execution of career development programs including seminars, workshops, and internship placement initiatives.",
+      "Drafted project documentation such as Terms of Reference (ToR), detailed event rundowns, and Memorandums of Understanding (MoU) for partners, while mentoring committee members through operational planning."
     ]
   },
   {
-    id: "oop-assistant",
-    title: "Universitas Ciputra Surabaya",
-    role: "Object-Oriented Programming Student Assistant",
-    date: "February 2026 - June 2026",
-    category: "Work",
-    points: [
-      "Assessed weekly lab assignments for Java programming based on technical rubrics, verifying the correct application of OOP principles.",
-      "Provided constructive technical feedback to students, ensuring code clarity, logical problem-solving, and adherence to object-oriented design paradigms."
-    ]
-  },
-  {
-    id: "gdg-coord",
+    id: "gdg",
     title: "Google Developer Groups (GDG) on Campus",
-    role: "Creative Division Coordinator",
-    date: "November 2025 - June 2026",
+    role: "Creative Member, then Creative Coordinator",
+    date: "November 2024 - August 2026",
     category: "Leadership",
     points: [
-      "Spearheaded promotional strategies and managed end-to-end design workflows for Techvolution 3.0, featuring industry experts in AI and Full-Stack Development.",
-      "Led a team of creative designers to develop promotional materials, successfully increasing event attendance through consistent visual branding."
-    ]
-  },
-  {
-    id: "su-member",
-    title: "Student Union of Informatics",
-    role: "PDD Design Division Member",
-    date: "April 2025 - June 2026",
-    category: "Leadership",
-    points: [
-      "Collaborated within the creative team to produce high-impact visual assets and promotional materials for various student union initiatives.",
-      "Ensured all designs aligned strictly with event themes and campus branding guidelines."
+      "Facilitated Android Jetpack Compose Study Jam sessions, providing technical mentorship and code-along guidance to peers.",
+      "As Creative Coordinator, led a team of designers and owned the visual identity and promotional strategy for Techvolution 3.0, a flagship event on AI and Full-Stack Development.",
+      "Designed seminar branding and promotional materials for Techvolution 2.0 as a creative team member."
     ]
   },
   {
     id: "su-hackfest",
     title: "Student Union of Informatics",
-    role: "PDD Design Division Coordinator of Hackfest 2026",
+    role: "PDD Design Coordinator, Hackfest 2026",
     date: "October 2025 - April 2026",
     category: "Leadership",
     points: [
-      "Directed the design team for Hackfest 2026, which featured both Hackathon and UI/UX competition tracks.",
-      "Delegated design tasks, managed project timelines, and provided mentorship to ensure all visual assets met quality standards and strict deadlines."
-    ]
-  },
-  {
-    id: "coa-assistant",
-    title: "Universitas Ciputra Surabaya",
-    role: "Computer Organization & Architecture Student Assistant",
-    date: "September 2025 - January 2026",
-    category: "Work",
-    points: [
-      "Supported course development by preparing, structuring, and organizing lecture presentation content.",
-      "Drafted comprehensive exam questions focused on fundamental system architecture and hardware-software interaction concepts.",
-      "Managed the grading process for student examinations and assessments, ensuring consistent evaluation standards."
-    ]
-  },
-  {
-    id: "gdg-member",
-    title: "Google Developer Groups (GDG) on Campus",
-    role: "Creative Division Member",
-    date: "November 2024 - June 2025",
-    category: "Leadership",
-    points: [
-      "Facilitated Android Jetpack Compose Study Jam sessions by providing technical mentorship and code-along guidance to peers.",
-      "Designed visual assets for Techvolution 2.0, including seminar branding and promotional materials, ensuring high-quality outreach."
+      "Directed the design team for Hackfest 2026 and established a Master Design system used as the template library for all digital and print assets.",
+      "Delegated design tasks, set deadlines, and reviewed every output for adherence to the event's visual guidelines.",
+      "Applied the same Master Design approach as PDD Design Coordinator for PULSE 2025, the Student Union's internship program."
     ]
   },
   {
     id: "apple-foundation",
-    title: "Apple Foundation",
-    role: "Participant",
+    title: "Apple Developer Academy @ UC Surabaya",
+    role: "Apple Foundation Program Participant",
     date: "July 2024 - August 2024",
     category: "Education",
     points: [
       "Designed and developed a gamified time management iOS application using SwiftUI for interface construction and SwiftData for efficient local data persistence.",
       "Implemented Apple’s Human Interface Guidelines (HIG) to design an intuitive, responsive user experience and consistent navigation flow.",
-      "Collaborated in an agile team of 5 members using the Challenge-Based Learning (CBL) framework to deliver a functional mobile prototype within a 4-week intensive program."
+      "Collaborated in a team using the Challenge-Based Learning (CBL) framework, validating app concepts with structured ideation methods before building a functional prototype."
+    ]
+  },
+  {
+    id: "uc-informatics",
+    title: "Universitas Ciputra Surabaya",
+    role: "Undergraduate Student, Informatics",
+    date: "September 2024 - Present",
+    category: "Education",
+    points: [
+      "Pursuing a degree in Informatics with a focus on native mobile development (Swift, Kotlin) and full-stack web development (Laravel, Next.js, React)."
     ]
   }
 ];

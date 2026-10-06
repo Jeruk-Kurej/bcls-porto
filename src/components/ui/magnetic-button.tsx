@@ -13,7 +13,7 @@ export const MagneticButton = ({
   className?: string;
   onClick?: () => void;
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -32,19 +32,19 @@ export const MagneticButton = ({
 
   return (
     <div
-      ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
       className="relative p-4 flex items-center justify-center cursor-pointer"
-      onClick={onClick}
     >
       <motion.button
+        ref={ref}
         animate={{ x, y }}
         transition={{ type: "spring", stiffness: 300, damping: 20, mass: 0.5 }}
         className={cn(
           "relative rounded-full px-8 py-3 text-sm font-medium tracking-wide text-[var(--color-depth)] overflow-hidden bg-white/80 border border-[var(--color-tide)]/30 transition-all hover:shadow-md group cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-tide-deep)]",
           className
         )}
+        onClick={onClick}
       >
         <span className="absolute inset-0 bg-gradient-to-r from-[var(--color-tide)]/20 to-[var(--color-foam)] translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300 ease-in-out rounded-full"></span>
         <span className="relative z-10">{children}</span>

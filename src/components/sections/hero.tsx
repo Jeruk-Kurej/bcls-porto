@@ -1,12 +1,14 @@
 "use client";
 
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Mail } from "lucide-react";
+import { useReducedMotionState } from "@/lib";
 
 export const HeroSection = () => {
-  const shouldReduceMotion = useReducedMotion();
+  const { enabled } = useReducedMotionState();
+  const shouldReduceMotion = !enabled;
   const { scrollY } = useScroll();
   const yParallax = useTransform(scrollY, [0, 500], [0, 80]);
   const opacityParallax = useTransform(scrollY, [0, 700], [1, 0]);
@@ -19,15 +21,59 @@ export const HeroSection = () => {
 
   return (
     <section id="hero" className="relative min-h-[92vh] flex items-center w-full overflow-hidden bg-transparent pt-28 pb-16 px-4 md:px-8">
-      {/* Background ambient water glow */}
-      <div 
+      {/* ── Background: sparse contour wave lines instead of blurred orbs ── */}
+      <svg
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 right-0 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle_at_center,var(--color-tide)/18,transparent_70%)] blur-3xl"
-      />
-      <div 
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-[radial-gradient(circle_at_center,var(--color-arcane)/22,transparent_70%)] blur-3xl"
-      />
+        className="pointer-events-none absolute inset-0 w-full h-full"
+        preserveAspectRatio="xMidYMid slice"
+        viewBox="0 0 1200 800"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {/* Thin contour/wave lines — quiet background texture */}
+        <path
+          d="M-50 520 Q200 440 400 480 T800 460 T1250 500"
+          stroke="var(--color-tide)"
+          strokeWidth="1"
+          strokeOpacity="0.12"
+          fill="none"
+        />
+        <path
+          d="M-50 570 Q250 510 500 540 T900 520 T1250 560"
+          stroke="var(--color-tide)"
+          strokeWidth="0.75"
+          strokeOpacity="0.08"
+          fill="none"
+        />
+        <path
+          d="M-50 620 Q300 580 600 600 T1000 590 T1250 630"
+          stroke="var(--color-tide)"
+          strokeWidth="0.5"
+          strokeOpacity="0.06"
+          fill="none"
+        />
+        {/* Fading dot grid — denser near center-right, fading outward */}
+        {[
+          { cx: 800, cy: 200, r: 1.2, o: 0.08 },
+          { cx: 850, cy: 260, r: 1, o: 0.06 },
+          { cx: 900, cy: 180, r: 0.8, o: 0.05 },
+          { cx: 760, cy: 280, r: 1, o: 0.07 },
+          { cx: 920, cy: 240, r: 0.9, o: 0.04 },
+          { cx: 700, cy: 350, r: 1.1, o: 0.06 },
+          { cx: 950, cy: 310, r: 0.7, o: 0.04 },
+          { cx: 1000, cy: 200, r: 0.8, o: 0.03 },
+          { cx: 820, cy: 340, r: 1, o: 0.05 },
+        ].map((dot, i) => (
+          <circle
+            key={i}
+            cx={dot.cx}
+            cy={dot.cy}
+            r={dot.r}
+            fill="var(--color-tide)"
+            fillOpacity={dot.o}
+          />
+        ))}
+      </svg>
 
       <div className="mx-auto max-w-6xl w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
@@ -39,17 +85,6 @@ export const HeroSection = () => {
           }}
           className="lg:col-span-7 flex flex-col items-start text-left"
         >
-          {/* Status pill */}
-          <motion.div 
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-[var(--color-tide)]/30 text-xs font-semibold text-[var(--color-depth)] shadow-2xs mb-6"
-          >
-            <span className="w-2 h-2 rounded-full bg-[var(--color-tide)] animate-pulse" />
-            <span>Available for Full-Stack & Native Roles</span>
-          </motion.div>
-
           {/* Display Name */}
           <motion.h1 
             initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
@@ -61,14 +96,15 @@ export const HeroSection = () => {
             <span className="italic font-normal text-[var(--color-tide-deep)]">Lukito Setiawan</span>
           </motion.h1>
 
-          {/* Positioning Statement (Option A: Platform breadth & craft) */}
+          {/* Positioning Statement — availability info folded in naturally */}
           <motion.p
             initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-base sm:text-lg text-[var(--color-ink)] leading-relaxed max-w-xl mb-8"
           >
-            Full-stack application developer building native iOS, Android, and web systems. 
+            Full-stack application developer building native iOS, Android, and web systems — 
+            currently open to full-stack and native roles. 
             From campus-scale web portals at Universitas Ciputra to Apple Foundation SwiftUI 
             prototypes, I turn complex workflows into tactile, dependable software.
           </motion.p>
@@ -99,44 +135,29 @@ export const HeroSection = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right Column: Organic Floating Graphic & Avatar */}
+        {/* Right Column: Portrait with distinct water-ring treatment */}
         <div className="lg:col-span-5 flex items-center justify-center relative">
-          {/* Ambient Arcane / Tide decorative glow (decoration only - no text/icons) */}
-          <div 
-            aria-hidden="true"
-            className="absolute -inset-4 rounded-full bg-gradient-to-tr from-[var(--color-tide)]/25 via-[var(--color-arcane)]/30 to-transparent blur-2xl pointer-events-none"
-          />
+          {/* Concentric ripple rings — decorative frame distinct from the rounded-2xl cards */}
+          <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-full border border-[var(--color-tide)]/15" />
+          </div>
+          <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-72 h-72 sm:w-[22rem] sm:h-[22rem] rounded-full border border-[var(--color-tide)]/8" />
+          </div>
 
-          {/* Organic Water Ripple SVG */}
-          <svg 
-            className="w-72 h-72 sm:w-88 sm:h-88 text-[var(--color-tide)]/25 absolute pointer-events-none"
-            viewBox="0 0 400 400" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-          >
-            <path 
-              d="M312 120C350 170 380 240 350 290C320 340 240 370 170 360C100 350 40 300 25 240C10 180 40 110 90 70C140 30 210 20 260 50C310 80 274 70 312 120Z" 
-              fill="currentColor"
-              className="opacity-40"
-            />
-            <circle cx="200" cy="200" r="160" stroke="currentColor" strokeWidth="1.5" strokeDasharray="6 6" className="opacity-60" />
-            <circle cx="200" cy="200" r="185" stroke="currentColor" strokeWidth="1" className="opacity-30" />
-          </svg>
-
-          {/* Central Portrait Card */}
+          {/* Portrait — circular mask, no frosted-glass card wrapper */}
           <motion.div
             initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative z-10 p-3 sm:p-4 rounded-3xl bg-white/70 backdrop-blur-md border border-[var(--color-tide)]/30 shadow-xl"
+            className="relative z-10"
           >
-            <div className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-2xl overflow-hidden bg-[var(--color-foam)]">
+            <div className="relative w-48 h-48 sm:w-60 sm:h-60 rounded-full overflow-hidden ring-2 ring-[var(--color-tide)]/25 ring-offset-4 ring-offset-[var(--color-mist)] shadow-lg">
               <Image
                 src="https://avatars.githubusercontent.com/u/191065390?v=4"
                 alt="Bryan Carlie Lukito Setiawan"
                 fill
-                sizes="(max-width: 640px) 176px, 224px"
+                sizes="(max-width: 640px) 192px, 240px"
                 className="object-cover"
                 priority
               />

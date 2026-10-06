@@ -8,15 +8,13 @@ import { Marquee } from "@/components/ui/marquee";
 import { GitHubCalendar } from "react-github-calendar";
 import { GithubIcon } from "@/components/ui/icons";
 import { staggerContainer, cardFadeInUp } from "@/lib/motion";
+import { SectionHeader } from "@/components/ui";
 
 export const AboutSection = () => {
   return (
     <section id="capabilities" className="relative w-full bg-transparent py-20 px-4 md:px-8">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-12 flex flex-col items-center justify-center text-center">
-          <h2 className="text-3xl font-display font-bold text-[var(--color-depth)] sm:text-4xl">Technical Profile</h2>
-          <div className="mt-3 h-1 w-20 rounded-full bg-[var(--color-tide)]/40" />
-        </div>
+        <SectionHeader title="Technical Profile" className="mb-12" />
 
         <motion.div
           initial="hidden"
@@ -119,6 +117,7 @@ const items = [
               className="inline-block z-20 px-3.5 py-1.5 bg-white/80 hover:bg-white rounded-full text-xs sm:text-sm font-medium text-[var(--color-depth)] border border-[var(--color-tide)]/30 hover:border-[var(--color-tide)] transition-all shadow-xs whitespace-nowrap cursor-pointer mx-1.5"
             >
               {tech.name}
+              <span className="sr-only"> (opens in new tab)</span>
             </motion.a>
           ))}
         </Marquee>
@@ -135,6 +134,7 @@ const items = [
               className="inline-block z-20 px-3.5 py-1.5 bg-white/80 hover:bg-white rounded-full text-xs sm:text-sm font-medium text-[var(--color-depth)] border border-[var(--color-tide)]/30 hover:border-[var(--color-tide)] transition-all shadow-xs whitespace-nowrap cursor-pointer mx-1.5"
             >
               {tech.name}
+              <span className="sr-only"> (opens in new tab)</span>
             </motion.a>
           ))}
         </Marquee>

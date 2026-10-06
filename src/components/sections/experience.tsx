@@ -1,9 +1,11 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { experienceData, ExperienceCategory } from "@/data/experience";
 import { Briefcase, Users, GraduationCap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useReducedMotionState } from "@/lib";
+import { SectionHeader } from "@/components/ui";
 
 const CategoryBadge = ({ category }: { category: ExperienceCategory }) => {
   let colorClass = "";
@@ -33,15 +35,13 @@ const CategoryBadge = ({ category }: { category: ExperienceCategory }) => {
 };
 
 export const ExperienceSection = () => {
-  const shouldReduceMotion = useReducedMotion();
+  const { enabled } = useReducedMotionState();
+  const shouldReduceMotion = !enabled;
 
   return (
     <section id="experience" className="relative w-full py-24 px-4 md:px-8 z-10">
       <div className="mx-auto max-w-4xl">
-        <div className="mb-16 flex flex-col items-center justify-center text-center">
-          <h2 className="text-4xl font-display font-bold text-[var(--color-depth)] sm:text-5xl tracking-tight">Experience & Journey</h2>
-          <div className="mt-4 h-1 w-24 rounded-full bg-[var(--color-tide)]/40" />
-        </div>
+        <SectionHeader title="Experience & Journey" className="mb-16" />
 
         <div className="relative">
           {/* Vertical Timeline Backbone */}
@@ -70,7 +70,7 @@ export const ExperienceSection = () => {
                   <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-[var(--color-tide)]/20 to-[var(--color-foam)] opacity-0 group-hover:opacity-100 transition duration-500 blur-sm"></div>
                   
                   {/* Glassmorphism Card */}
-                  <div className="relative p-6 md:p-8 bg-[var(--color-foam)]/70 backdrop-blur-md border border-[var(--color-tide)]/25 rounded-2xl shadow-sm group-hover:shadow-md transition-all duration-300">
+                  <div className="relative p-6 md:p-8 bg-[var(--color-foam)] border border-[var(--color-tide)]/25 rounded-2xl shadow-sm group-hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-5">
                       <div>
                         <div className="flex items-center gap-3 mb-2.5">

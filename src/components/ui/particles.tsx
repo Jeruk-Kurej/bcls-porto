@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from "react";
-import { useReducedMotion } from "framer-motion";
+import { useReducedMotionState } from "@/lib";
 
 interface Circle {
   x: number;
@@ -31,7 +31,8 @@ export const Particles = ({
   ease = 50,
   color = "#2AA8CC",
 }: ParticlesProps) => {
-  const shouldReduceMotion = useReducedMotion();
+  const { enabled } = useReducedMotionState();
+  const shouldReduceMotion = !enabled;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasContainerRef = useRef<HTMLDivElement>(null);
   const context = useRef<CanvasRenderingContext2D | null>(null);

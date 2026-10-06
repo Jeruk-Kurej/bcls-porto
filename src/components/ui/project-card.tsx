@@ -38,7 +38,11 @@ export const ProjectCard = ({ project, as: Heading = "h3", detailed = false, siz
             Read case study
           </Link>
           {project.liveUrl && <ExternalLink href={project.liveUrl}>Live site</ExternalLink>}
-          <ExternalLink href={project.link}>Source code</ExternalLink>
+          {project.repos.map((repo) => (
+            <ExternalLink key={repo.href} href={repo.href}>
+              {repo.label}
+            </ExternalLink>
+          ))}
         </p>
       )}
     </article>

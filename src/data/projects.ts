@@ -6,17 +6,30 @@ export type ProjectFeature = {
 
 export type ProjectPlatform = "Web" | "iOS" | "Android";
 
+export type ProjectRepo = {
+  label: string;
+  href: string;
+};
+
 export type Project = {
   id: string;
   title: string;
   subtitle: string;
   platform: ProjectPlatform;
+  /** When the repository was active, from first to last commit */
+  period: string;
+  /** "Solo" or the number of developers */
+  team: string;
+  /** My share of the repository's commits, for team projects */
+  commitShare?: string;
+  /** What I personally built */
+  role: string;
   about: string;
   problem: string;
   solution: string;
   features: ProjectFeature[];
   techStack: string[];
-  link: string;
+  repos: ProjectRepo[];
   liveUrl?: string;
   images?: string[];
 };
@@ -27,17 +40,21 @@ export const projectsData: Project[] = [
     title: "UC Online Learning",
     subtitle: "Student & Alumni Business Directory",
     platform: "Web",
-    about: "A comprehensive academic and business directory platform built for Universitas Ciputra Online. This platform bridges the gap between student/alumni entrepreneurs and potential clients or collaborators by showcasing their business profiles, achievements, and service catalogs.",
-    problem: "Students and alumni entrepreneurs often lack a unified, university-backed platform to professionally showcase their portfolios and services to the wider academic and business community.",
-    solution: "Developed a robust directory ecosystem with AI moderation to ensure content quality and a seamless onboarding system to handle mass data imports efficiently.",
+    period: "Dec 2025 – Sep 2026",
+    team: "2 developers",
+    commitShare: "494 of 655",
+    role: "I wrote most of the application: the business, user, and featured-profile pages, the controllers and routes behind them, the spreadsheet import, and the Docker and Railway deployment setup.",
+    about: "A directory for Universitas Ciputra Online Learning where students and alumni publish their business profiles, products, and services, so potential clients and collaborators can find them in one place.",
+    problem: "Student and alumni entrepreneurs had no university-backed place to present their businesses and services to the wider academic and business community.",
+    solution: "We built a Laravel directory with business profiles, product and service catalogs, and regional mapping. Admins review submissions before they go public, student data is imported in bulk from spreadsheets, and testimonies are screened with the Gemini API.",
     features: [
-      { title: "AI-Powered Moderation", description: "Integrates Google Gemini API to analyze and moderate user-generated content and business descriptions.", icon: "BrainCircuit" },
-      { title: "Automated Data Onboarding", description: "Custom CSV import system to batch-upload student and alumni profiles seamlessly.", icon: "Database" },
-      { title: "Cloud Media Management", description: "Automated image optimization and storage scaling utilizing Cloudinary integration.", icon: "Cloud" },
-      { title: "Role-Based Workflows", description: "Secure admin panel for reviewing, approving, or rejecting business profile submissions.", icon: "Lock" },
+      { title: "AI testimony moderation", description: "Screens submitted testimonies with the Google Gemini API before they are published.", icon: "BrainCircuit" },
+      { title: "Bulk data import", description: "Imports student and alumni profiles from spreadsheets in a single batch.", icon: "Database" },
+      { title: "Cloud image storage", description: "Stores and optimizes profile and product images through Cloudinary.", icon: "Cloud" },
+      { title: "Admin approval workflow", description: "Admins review, approve, or reject business profiles before they appear in the directory.", icon: "Lock" },
     ],
-    techStack: ["Laravel 11 (PHP)", "React.js", "TypeScript", "Tailwind CSS", "Inertia.js", "MySQL"],
-    link: "https://github.com/Jeruk-Kurej/UC-Online-Learning",
+    techStack: ["Laravel 12 (PHP)", "Blade", "Alpine.js", "Tailwind CSS", "MySQL", "Google Gemini API", "Cloudinary", "Pest"],
+    repos: [{ label: "Source code", href: "https://github.com/Jeruk-Kurej/UC-Online-Learning" }],
     liveUrl: "https://uco-web.vercel.app",
     images: ["/images/uco/uco-1.png", "/images/uco/uco-2.png", "/images/uco/uco-3.png", "/images/uco/uco-4.png"]
   },
@@ -46,17 +63,21 @@ export const projectsData: Project[] = [
     title: "GKI Darmo Permai",
     subtitle: "Community Portal & Management System",
     platform: "Web",
-    about: "An interactive and highly secure community portal developed for GKI Darmo Permai. The platform serves as a centralized digital hub for congregation members to access worship schedules, digital bulletins, and multimedia content.",
-    problem: "The church relied heavily on physical paper bulletins and fragmented communication channels for scheduling, leading to inefficiencies and reduced engagement.",
-    solution: "Engineered a centralized digital portal to digitalize the weekly bulletin, integrate video streaming, and provide a secure management interface for church committees.",
+    period: "Apr 2026 – Sep 2026",
+    team: "Solo",
+    role: "I designed and built the whole project on my own, from the data model and admin panel to the public pages.",
+    about: "A website and admin panel for GKI Darmo Permai church. Members check worship schedules, read the weekly e-bulletin, and browse events, videos, and galleries, while committees manage the content themselves.",
+    problem: "The church relied on printed bulletins and scattered communication channels for schedules and announcements, which made information slow to reach the congregation.",
+    solution: "I built a public site backed by an admin panel where committees manage schedules, bulletins, events, and media. Access is organised into teams with roles and invitations, and accounts can be protected with two-factor authentication.",
     features: [
-      { title: "Dynamic Scheduling & Media", description: "Real-time updates for worship schedules, integrated video streaming, and event galleries.", icon: "Calendar" },
-      { title: "Digital Bulletin", description: "Paperless weekly newsletter distribution system.", icon: "BookOpen" },
-      { title: "Enterprise-Grade Security", description: "Strict Two-Factor Authentication (2FA) enforcement and recovery code management for team/admin accounts.", icon: "Key" },
-      { title: "Team Management", description: "Advanced permission and role management system for different church committees.", icon: "UsersRound" },
+      { title: "Worship schedules and events", description: "Admins publish service schedules and church events that appear on the public site.", icon: "Calendar" },
+      { title: "E-bulletin", description: "The weekly bulletin is published online instead of on paper.", icon: "BookOpen" },
+      { title: "Media library", description: "Worship videos and photo galleries collected in one place.", icon: "Video" },
+      { title: "Two-factor authentication", description: "Accounts can enable 2FA with recovery codes through Laravel Fortify.", icon: "Key" },
+      { title: "Teams and roles", description: "Committee members are invited into teams with role-based permissions.", icon: "UsersRound" },
     ],
-    techStack: ["Laravel (PHP)", "React.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "Pest PHP"],
-    link: "https://github.com/Jeruk-Kurej/GKI-Darmo-Permai",
+    techStack: ["Laravel 13 (PHP)", "Inertia.js", "React", "TypeScript", "Tailwind CSS", "shadcn/ui", "Laravel Fortify", "Pest"],
+    repos: [{ label: "Source code", href: "https://github.com/Jeruk-Kurej/GKI-Darmo-Permai" }],
     liveUrl: "https://gki-darmo-permai.vercel.app",
     images: ["/images/gki/gki-1.png", "/images/gki/gki-2.png", "/images/gki/gki-3.png"]
   },
@@ -65,69 +86,94 @@ export const projectsData: Project[] = [
     title: "YukDebat",
     subtitle: "iOS Platform for the Debate Community",
     platform: "iOS",
-    about: "YukDebat is an innovative iOS platform tailored for the competitive debate community. It serves as a centralized hub for debaters, adjudicators, and competition promoters to interact, practice, and evaluate debate motions.",
-    problem: "Finding quality debate sparring partners, getting constructive feedback from certified adjudicators, and tracking debate competition schedules are often scattered across different social media groups.",
-    solution: "YukDebat bridges this gap by offering a dedicated sparring lobby, an AI-powered motion generator, and a peer-review system where debaters can publish their case-building notes to be evaluated by verified adjudicators.",
+    period: "May 2026 – Jun 2026",
+    team: "4 developers",
+    commitShare: "60 of 210",
+    role: "In a team of four, I worked on the sparring rooms (capacity checks, team slots, visibility, and automatic start and cancel), the Gemini motion generator and its fallback, the adjudicator evaluation form, and the admin moderation screens.",
+    about: "An iOS app for the competitive debate community. Debaters find sparring partners, generate practice motions, share case-building notes for feedback from adjudicators, and follow upcoming competitions.",
+    problem: "Finding sparring partners, getting feedback from adjudicators, and tracking competition schedules were scattered across different social media groups.",
+    solution: "We built a SwiftUI app on Firebase with a sparring lobby that updates in real time, a motion generator powered by the Gemini API, and a review flow where approved adjudicators evaluate debaters' notes.",
     features: [
-      { title: "AI Motion Generator", description: "Integrates with Google Gemini API to dynamically generate challenging debate motions.", icon: "Bot" },
-      { title: "Sparring Lobby", description: "Create and join public/private debate sparring rooms with slot allocations.", icon: "Swords" },
-      { title: "Case-Building & Evaluation", description: "Write debate notes, set visibility, and request feedback from verified adjudicators.", icon: "FileText" },
-      { title: "Competition Tracker", description: "Browse, register, and track upcoming debate competitions.", icon: "Trophy" },
-      { title: "Admin Moderation Dashboard", description: "Built-in moderation tools to approve adjudicator requests and manage public notes.", icon: "ShieldCheck" },
+      { title: "AI motion generator", description: "Generates debate motions with the Google Gemini API, with a fallback list when the request fails.", icon: "Bot" },
+      { title: "Sparring lobby", description: "Create and join public or private sparring rooms with limited slots.", icon: "Swords" },
+      { title: "Case-building and evaluation", description: "Write case notes, set their visibility, and request feedback from approved adjudicators.", icon: "FileText" },
+      { title: "Competition tracker", description: "Browse upcoming debate competitions and their details.", icon: "Trophy" },
+      { title: "Admin moderation", description: "Admins approve adjudicator requests and moderate public notes.", icon: "ShieldCheck" },
     ],
-    techStack: ["Swift", "SwiftUI (MVVM)", "Firebase", "Google Gemini API", "CoreData / SwiftData"],
-    link: "https://github.com/Jeruk-Kurej/YukDebat"
+    techStack: ["Swift", "SwiftUI (MVVM)", "Firebase Auth", "Cloud Firestore", "Google Gemini API", "Cloudinary"],
+    repos: [{ label: "Source code", href: "https://github.com/Jeruk-Kurej/YukDebat" }],
+    images: ["/images/yukdebat/yukdebat-1.png", "/images/yukdebat/yukdebat-2.png"]
   },
   {
     id: "dagify",
     title: "Dagify",
-    subtitle: "Apple Ecosystem CRM & Business Tracker",
+    subtitle: "Business Management Suite for iPhone, iPad, and Mac",
     platform: "iOS",
-    about: "Dagify is a CRM and business management suite built natively for the Apple Ecosystem (macOS/iPadOS/iOS). It integrates deeply with Cloud infrastructure to provide business owners with a premium, synchronized overview of their operations.",
-    problem: "Business owners using Apple devices often lack a native, high-performance CRM tool that synchronizes seamlessly across their Mac, iPad, and iPhone for tracking cash flow and loyal customers.",
-    solution: "I built Dagify utilizing modern SwiftUI and Firebase to provide a seamless, native Apple experience. It centralizes customer data, tracks spending habits, and leverages SwiftData for high-speed local caching.",
+    period: "May 2026 – Jun 2026",
+    team: "3 developers",
+    commitShare: "54 of 166",
+    role: "In a team of three, I built the customer (CRM) module and authentication, worked on the offline order sync, and wrote unit tests for the view models.",
+    about: "A business management app for small shops on iPhone, iPad, and Mac. It combines a point of sale, ingredient-level inventory, cashflow records, and a customer list in one native app.",
+    problem: "Small business owners on Apple devices often track sales, stock, cash flow, and customers in separate tools, and a dropped connection can interrupt the cashier.",
+    solution: "We built a native SwiftUI app backed by Firebase. Orders taken offline are stored on the device with SwiftData and synced when the connection returns, and the same data is available on iPhone, iPad, and a dedicated Mac app.",
     features: [
-      { title: "CRM & Loyalty", description: "Tracks customer visits, spending habits, and automatically flags loyal customers based on store thresholds.", icon: "Users" },
-      { title: "Cross-Device Sync", description: "Seamless data synchronization across iPhone, iPad, and Mac.", icon: "Cloud" },
-      { title: "Real-Time Tracking", description: "Live updates for cashflow and customer interactions.", icon: "BarChart" },
+      { title: "Point of sale with offline orders", description: "Orders taken without a connection are saved on the device and synced later.", icon: "ShoppingCart" },
+      { title: "Inventory and recipes", description: "Tracks ingredients in batches, links them to products through recipes, and warns before a batch expires.", icon: "Package" },
+      { title: "Cashflow reports", description: "Records income and expenses and exports them as a PDF report.", icon: "FileText" },
+      { title: "Customer loyalty", description: "Tracks customer visits and spending, and flags loyal customers based on store thresholds.", icon: "Users" },
+      { title: "Sales analytics", description: "Charts for product performance and daily results.", icon: "BarChart" },
     ],
-    techStack: ["Swift", "SwiftUI", "SwiftData", "Firebase"],
-    link: "https://github.com/Jeruk-Kurej/Dagify"
+    techStack: ["Swift", "SwiftUI", "SwiftData", "Firebase Auth", "Cloud Firestore", "Swift Charts", "Swift Testing"],
+    repos: [{ label: "Source code", href: "https://github.com/Jeruk-Kurej/Dagify" }],
+    images: ["/images/dagify/dagify-1.png", "/images/dagify/dagify-2.png"]
   },
   {
     id: "sumo",
     title: "Sum-O",
-    subtitle: "Android POS Ecosystem",
+    subtitle: "Android Point of Sale with a REST API",
     platform: "Android",
-    about: "Sum-O is a comprehensive Android-native Point of Sale (POS) solution designed to empower small to medium businesses. It provides real-time business analytics, seamless offline-to-online synchronization, and robust multi-tenant data isolation.",
-    problem: "Many small to medium businesses struggle with network instability paralyzing their cloud-dependent POS systems, causing major disruptions during cashier duties and inventory tracking.",
-    solution: "I engineered an offline-first architecture for Sum-O, allowing transactions to be saved locally when the connection drops and synced seamlessly later. It includes strict user-data isolation for secure multi-branch operations.",
+    period: "Dec 2025 – Jan 2026",
+    team: "3 developers",
+    commitShare: "95 of 143",
+    role: "I wrote most of both codebases: store and product management, the order and cart flow, and navigation in the Android app, plus the store, product, order, and image-upload endpoints and the Railway deployment on the backend.",
+    about: "A point-of-sale app for small businesses on Android. Owners manage one or more stores, their product catalog, and incoming orders, and see revenue by day, week, and month.",
+    problem: "Small shops that run more than one outlet need a cashier app that keeps each outlet's menu, orders, and revenue separate and easy to check.",
+    solution: "We built a Jetpack Compose app on top of our own Express and Prisma API. Each owner signs in, creates stores, assigns products to them, takes orders with cash or QRIS payment, and reviews revenue in an analysis view.",
     features: [
-      { title: "Smart POS", description: "Real-time cart management with dynamic price calculation and tax integration.", icon: "ShoppingCart" },
-      { title: "Inventory & Recipe Management", description: "Automated stock deduction based on product recipes and low-stock/expiration alerts.", icon: "Package" },
-      { title: "Business Analytics", description: "Real-time charts for revenue, expenses, and best-selling products.", icon: "BarChart" },
-      { title: "Multi-User Security", description: "Robust JWT authentication and strictly isolated data access per user/branch.", icon: "Shield" },
+      { title: "Cashier flow", description: "A cart with automatic totals and tax, followed by cash or QRIS payment.", icon: "ShoppingCart" },
+      { title: "Multi-store management", description: "One owner can run several stores and assign products to each of them.", icon: "Store" },
+      { title: "Revenue analysis", description: "Revenue by day, week, and month, calculated from recorded orders.", icon: "BarChart" },
+      { title: "Per-owner data isolation", description: "JWT authentication, with every store, category, and product scoped to its owner.", icon: "Shield" },
     ],
-    techStack: ["Kotlin", "Jetpack Compose", "MVVM", "Node.js", "Prisma"],
-    link: "https://github.com/Jeruk-Kurej/Sum-O"
+    techStack: ["Kotlin", "Jetpack Compose", "MVVM", "Retrofit", "Node.js (Express)", "Prisma", "PostgreSQL", "Cloudinary"],
+    repos: [
+      { label: "Android app source", href: "https://github.com/Jeruk-Kurej/Sum-O_Frontend" },
+      { label: "API source", href: "https://github.com/Jeruk-Kurej/Sum-O_Backend" },
+    ],
+    images: ["/images/sumo/sumo-1.png", "/images/sumo/sumo-2.png"]
   },
   {
     id: "fixit",
     title: "FixIt",
     subtitle: "On-Demand Maintenance Service Marketplace",
     platform: "Web",
-    about: "An on-demand service marketplace connecting customers with verified technicians for appliance repairs and maintenance. FixIt streamlines the entire service lifecycle from diagnostics to scheduling and secure payments.",
-    problem: "Customers face difficulties in finding reliable technicians, getting transparent pricing upfront, and tracking their repair progress efficiently.",
-    solution: "Created a centralized marketplace with a guided, multi-step booking process, real-time chat, and dedicated dashboards for all user roles to ensure a transparent service lifecycle.",
+    period: "May 2026",
+    team: "Solo",
+    role: "I designed and built the whole project on my own, including the Prisma data model, authentication, and all three dashboards.",
+    about: "A marketplace that connects customers with technicians for appliance repair and maintenance, covering booking, payment verification, chat, and reviews.",
+    problem: "Customers struggle to find reliable technicians, see prices upfront, and follow the progress of a repair.",
+    solution: "I built a Next.js application with a guided booking flow, order status tracking, per-order chat, and separate dashboards for customers, technicians, and admins.",
     features: [
-      { title: "Smart Multi-Step Booking", description: "A highly engaging booking flow guiding users through Appliance Selection ➔ Diagnostics ➔ Price Breakdown ➔ Scheduling.", icon: "ClipboardList" },
-      { title: "Real-Time Communication", description: "Integrated live chat hub facilitating direct communication between customers and assigned technicians.", icon: "MessageSquare" },
-      { title: "Automated Notifications", description: "Smart reminder engine and toast notifications to keep users updated on their order status.", icon: "BellRing" },
-      { title: "Multi-Tenant Dashboards", description: "Dedicated, customized UI views for Admins, Customers, and Technicians.", icon: "LayoutDashboard" },
+      { title: "Multi-step booking", description: "Guides customers through appliance selection, diagnostics, price breakdown, and scheduling.", icon: "ClipboardList" },
+      { title: "Order chat", description: "Customers and their assigned technician message each other inside an order.", icon: "MessageSquare" },
+      { title: "Notifications and reminders", description: "In-app notifications and reminders keep both sides updated on order status.", icon: "BellRing" },
+      { title: "Payment verification", description: "Down payments and final payments are checked and approved by an admin.", icon: "ShieldCheck" },
+      { title: "Role-based dashboards", description: "Separate views for admins, customers, and technicians.", icon: "LayoutDashboard" },
     ],
-    techStack: ["Next.js (App Router)", "React", "TypeScript", "Prisma ORM", "NextAuth.js", "Tailwind CSS"],
-    link: "https://github.com/Jeruk-Kurej/FixIt",
-    liveUrl: "https://fix-it-project.vercel.app"
+    techStack: ["Next.js (App Router)", "React", "TypeScript", "Prisma ORM", "MySQL", "NextAuth.js", "Tailwind CSS"],
+    repos: [{ label: "Source code", href: "https://github.com/Jeruk-Kurej/FixIt" }],
+    liveUrl: "https://fix-it-project.vercel.app",
+    images: ["/images/fixit/fixit-1.png", "/images/fixit/fixit-2.png", "/images/fixit/fixit-3.png"]
   }
 ];
 

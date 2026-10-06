@@ -21,6 +21,8 @@ import {
   MessageSquare,
   BellRing,
   LayoutDashboard,
+  Store,
+  Video,
   Sparkles,
   type LucideIcon
 } from "lucide-react";
@@ -49,6 +51,8 @@ export const featureIconMap: Record<string, LucideIcon> = {
   MessageSquare,
   BellRing,
   LayoutDashboard,
+  Store,
+  Video,
 };
 
 export const getFeatureIcon = (name?: string): LucideIcon => {

@@ -71,6 +71,20 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <dd className="mt-1 text-depth">{project.platform}</dd>
             </div>
             <div>
+              <dt className="text-muted">Timeline</dt>
+              <dd className="mt-1 text-depth">{project.period}</dd>
+            </div>
+            <div>
+              <dt className="text-muted">Team</dt>
+              <dd className="mt-1 text-depth">{project.team}</dd>
+            </div>
+            {project.commitShare && (
+              <div>
+                <dt className="text-muted">My commits</dt>
+                <dd className="mt-1 text-depth">{project.commitShare}</dd>
+              </div>
+            )}
+            <div>
               <dt className="text-muted">Built with</dt>
               <dd className="mt-1 text-depth">{project.techStack.join(", ")}</dd>
             </div>
@@ -78,7 +92,11 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <dt className="text-muted">Links</dt>
               <dd className="mt-1 flex flex-col items-start gap-1.5">
                 {project.liveUrl && <ExternalLink href={project.liveUrl}>Live site</ExternalLink>}
-                <ExternalLink href={project.link}>Source code</ExternalLink>
+                {project.repos.map((repo) => (
+                  <ExternalLink key={repo.href} href={repo.href}>
+                    {repo.label}
+                  </ExternalLink>
+                ))}
               </dd>
             </div>
           </dl>
@@ -88,7 +106,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       {leadImage && (
         <section className="wrap py-8">
           <h2 className="sr-only">Screenshots</h2>
-          <div className="relative aspect-[16/9] overflow-hidden rounded-[0.875rem] bg-white ring-1 ring-line">
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[0.875rem] bg-white ring-1 ring-line">
             <Image
               src={leadImage}
               alt={`${project.title} screenshot 1`}
@@ -107,7 +125,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               {moreImages.map((img, i) => (
                 <div
                   key={img}
-                  className="relative aspect-[4/3] overflow-hidden rounded-[0.875rem] bg-white ring-1 ring-line"
+                  className="relative aspect-[16/10] overflow-hidden rounded-[0.875rem] bg-white ring-1 ring-line"
                 >
                   <Image
                     src={img}
@@ -129,6 +147,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
 
       <Section title="The approach" className="py-8 md:py-10">
         <p className="max-w-[62ch] text-lg">{project.solution}</p>
+      </Section>
+
+      <Section title="My role" className="py-8 md:py-10">
+        <p className="max-w-[62ch] text-lg">{project.role}</p>
       </Section>
 
       {project.features.length > 0 && (

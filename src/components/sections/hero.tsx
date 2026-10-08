@@ -24,7 +24,8 @@ export const HeroSection = () => {
           <p className="mt-5 max-w-[56ch] text-lg">
             I study Informatics at Universitas Ciputra Surabaya and work across the stack, from
             database design to the interface: Swift and Kotlin on mobile, Laravel and Next.js on
-            the web. I&apos;m open to full-stack and native mobile roles.
+            the web. I&apos;ll join the Apple Developer Academy @ UC as a Cohort 2027 learner, and
+            I&apos;m open to full-stack and native mobile roles.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -33,6 +34,9 @@ export const HeroSection = () => {
             </Link>
             <a href={`mailto:${contactData.email}`} className="btn btn-quiet">
               Email me
+            </a>
+            <a href="/Bryan-Carlie-Lukito-Setiawan-CV.pdf" download className="btn btn-quiet">
+              Download CV
             </a>
           </div>
         </div>

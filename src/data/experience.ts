@@ -14,10 +14,10 @@ export const experienceData: ExperienceItem[] = [
     id: "uco-intern",
     title: "Universitas Ciputra Online Learning",
     role: "Intern",
-    date: "December 2025 – Present",
+    date: "June 2025 – Present",
     category: "Work",
     points: [
-      "Partnered with a teammate to design and build a student business showcase website using Laravel and MySQL, giving students a platform to publish professional profiles and testimonials.",
+      "Since December 2025, partnered with a teammate to design and build a student business showcase website using Laravel and MySQL, giving students a platform to publish professional profiles and testimonials.",
       "Manage daily virtual class operations by hosting Zoom sessions, recording lectures, and overseeing the technical flow for lecturers and students.",
       "Provide technical support for university seminars and events, including the 2025 MEM Inauguration Night, handling presentation media, video playback, and live production transitions.",
       "Facilitate outreach programs such as entrepreneurship workshops at SMK Harapan Sejati by managing technical delivery and media content."
@@ -69,6 +69,16 @@ export const experienceData: ExperienceItem[] = [
       "Directed the design team for Hackfest 2026 and established a Master Design system used as the template library for all digital and print assets.",
       "Delegated design tasks, set deadlines, and reviewed every output for adherence to the event's visual guidelines.",
       "Applied the same Master Design approach as PDD Design Coordinator for PULSE 2025, the Student Union's internship program."
+    ]
+  },
+  {
+    id: "ada-cohort-2027",
+    title: "Apple Developer Academy @ UC Surabaya",
+    role: "Incoming Learner, Cohort 2027",
+    date: "March 2027 – December 2027",
+    category: "Education",
+    points: [
+      "Accepted as a Learner for the 2027 cohort, an onsite program running from March to December 2027."
     ]
   },
   {

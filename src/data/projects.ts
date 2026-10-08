@@ -24,6 +24,10 @@ export type Project = {
   commitShare?: string;
   /** What I personally built */
   role: string;
+  /** Set when the project is not finished, e.g. "In development" */
+  status?: string;
+  /** A decision or lesson from the build, in my own words */
+  decision?: string;
   about: string;
   problem: string;
   solution: string;
@@ -43,6 +47,8 @@ export const projectsData: Project[] = [
     period: "Dec 2025 – Sep 2026",
     team: "2 developers",
     commitShare: "494 of 655",
+    status: "In development",
+    decision: "The university already had a website and a database, so the obvious route was to reuse that data. The existing tables had more than a hundred columns, many of them empty or inconsistent, so we designed our own schema for the showcase instead and revised it several times as the requirements became clearer.",
     role: "I wrote most of the application: the business, user, and featured-profile pages, the controllers and routes behind them, the spreadsheet import, and the Docker and Railway deployment setup.",
     about: "A directory for Universitas Ciputra Online Learning where students and alumni publish their business profiles, products, and services, so potential clients and collaborators can find them in one place.",
     problem: "Student and alumni entrepreneurs had no university-backed place to present their businesses and services to the wider academic and business community.",
@@ -65,6 +71,7 @@ export const projectsData: Project[] = [
     platform: "Web",
     period: "Apr 2026 – Sep 2026",
     team: "Solo",
+    status: "On hold, waiting for the next briefing",
     role: "I designed and built the whole project on my own, from the data model and admin panel to the public pages.",
     about: "A website and admin panel for GKI Darmo Permai church. Members check worship schedules, read the weekly e-bulletin, and browse events, videos, and galleries, while committees manage the content themselves.",
     problem: "The church relied on printed bulletins and scattered communication channels for schedules and announcements, which made information slow to reach the congregation.",
@@ -89,6 +96,7 @@ export const projectsData: Project[] = [
     period: "May 2026 – Jun 2026",
     team: "4 developers",
     commitShare: "60 of 210",
+    decision: "We first planned to store images in Firebase Storage, but it turned out to need a paid plan. We moved image uploads to Cloudinary and kept Firestore for the rest of the data.",
     role: "In a team of four, I worked on the sparring rooms (capacity checks, team slots, visibility, and automatic start and cancel), the Gemini motion generator and its fallback, the adjudicator evaluation form, and the admin moderation screens.",
     about: "An iOS app for the competitive debate community. Debaters find sparring partners, generate practice motions, share case-building notes for feedback from adjudicators, and follow upcoming competitions.",
     problem: "Finding sparring partners, getting feedback from adjudicators, and tracking competition schedules were scattered across different social media groups.",
@@ -159,6 +167,7 @@ export const projectsData: Project[] = [
     platform: "Web",
     period: "May 2026",
     team: "Solo",
+    decision: "The order chat was the part I learned the most from. It was my first time building messaging, and getting two people to see each other's messages inside one order made the whole app feel real to me.",
     role: "I designed and built the whole project on my own, including the Prisma data model, authentication, and all three dashboards.",
     about: "A marketplace that connects customers with technicians for appliance repair and maintenance, covering booking, payment verification, chat, and reviews.",
     problem: "Customers struggle to find reliable technicians, see prices upfront, and follow the progress of a repair.",

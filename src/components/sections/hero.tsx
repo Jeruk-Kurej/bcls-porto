@@ -24,8 +24,8 @@ export const HeroSection = () => {
           <p className="mt-5 max-w-[56ch] text-lg">
             I study Informatics at Universitas Ciputra Surabaya and work across the stack, from
             database design to the interface: Swift and Kotlin on mobile, Laravel and Next.js on
-            the web. I&apos;ll join the Apple Developer Academy @ UC as a Cohort 2027 learner, and
-            I&apos;m open to full-stack and native mobile roles.
+            the web. Right now I&apos;m most interested in iOS and Android apps and in building
+            websites, and I&apos;m happy to hear about interesting opportunities.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

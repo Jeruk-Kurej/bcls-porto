@@ -21,7 +21,7 @@ export const FooterSection = () => {
       <div className="wrap pt-16 pb-10 md:pt-24">
         <h2 className="display-lg text-white">Let&apos;s connect</h2>
         <p className="mt-6 max-w-[44ch] text-lg text-foam/90">
-          I&apos;m open to full-stack and native mobile roles. Email is the fastest way to reach me.
+          I&apos;m happy to hear about mobile and web projects or opportunities. Email is the fastest way to reach me.
         </p>
 
         <p className="mt-8">

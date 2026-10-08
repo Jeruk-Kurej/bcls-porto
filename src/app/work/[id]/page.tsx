@@ -70,6 +70,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
               <dt className="text-muted">Platform</dt>
               <dd className="mt-1 text-depth">{project.platform}</dd>
             </div>
+            {project.status && (
+              <div>
+                <dt className="text-muted">Status</dt>
+                <dd className="mt-1 text-depth">{project.status}</dd>
+              </div>
+            )}
             <div>
               <dt className="text-muted">Timeline</dt>
               <dd className="mt-1 text-depth">{project.period}</dd>
@@ -152,6 +158,12 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       <Section title="My role" className="py-8 md:py-10">
         <p className="max-w-[62ch] text-lg">{project.role}</p>
       </Section>
+
+      {project.decision && (
+        <Section title="What I learned" className="py-8 md:py-10">
+          <p className="max-w-[62ch] text-lg">{project.decision}</p>
+        </Section>
+      )}
 
       {project.features.length > 0 && (
         <Section title="Key features" className="py-8 md:py-10">

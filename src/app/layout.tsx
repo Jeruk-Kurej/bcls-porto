@@ -31,20 +31,11 @@ export const metadata: Metadata = {
     title: "Bryan Carlie Lukito Setiawan | Portfolio",
     description: "Full-Stack Application Developer specializing in iOS, Android, and Web applications. Explore my projects, journey, and technical toolkit.",
     siteName: "Bryan Carlie Portfolio",
-    images: [
-      {
-        url: "https://avatars.githubusercontent.com/u/191065390?v=4",
-        width: 460,
-        height: 460,
-        alt: "Bryan Carlie Lukito Setiawan",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Bryan Carlie Lukito Setiawan | Portfolio",
     description: "Full-Stack Application Developer specializing in iOS, Android, and Web applications.",
-    images: ["https://avatars.githubusercontent.com/u/191065390?v=4"],
   },
 };
 

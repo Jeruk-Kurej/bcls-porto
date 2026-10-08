@@ -43,7 +43,7 @@ export const HeroSection = () => {
 
         <div className="flex items-start gap-6">
           <Image
-            src="https://avatars.githubusercontent.com/u/191065390?v=4"
+            src="/images/profile.png"
             alt="Portrait of Bryan Carlie Lukito Setiawan"
             width={144}
             height={144}
